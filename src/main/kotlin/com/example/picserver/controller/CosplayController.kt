@@ -8,7 +8,7 @@ import javax.annotation.Resource
 
 @RestController
 @RequestMapping("cosplay")
-class CosplayController(@Resource val picService: PicService) {
+class CosplayController(@Resource private val picService: PicService) {
     @GetMapping("")
     fun list(): CommonResult<Any> =
         CommonResult.success(picService.list())
