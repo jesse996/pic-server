@@ -27,6 +27,7 @@ class Carousel : Serializable {
     var createTime: LocalDateTime? = null
     @TableField(fill = FieldFill.INSERT_UPDATE)
     var updateTime: LocalDateTime? = null
+    var deleted: Int? = null
 
 
     override fun toString(): String {
@@ -35,6 +36,7 @@ class Carousel : Serializable {
         ", url=" + url +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
+        ", deleted=" + deleted +
         "}"
     }
 }

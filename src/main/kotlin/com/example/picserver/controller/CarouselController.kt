@@ -2,13 +2,13 @@ package com.example.picserver.controller
 
 import com.example.picserver.common.CommonResult
 import com.example.picserver.entity.Carousel
-import com.example.picserver.entity.Pic
 import com.example.picserver.service.CarouselService
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.*
 import javax.annotation.Resource
 
 @RequestMapping("carousel")
+@RestController
 class CarouselController(@Resource private val carouselService: CarouselService) {
     @ApiOperation("获取轮播图")
     @GetMapping("")
