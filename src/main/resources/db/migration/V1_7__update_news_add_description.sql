@@ -1,0 +1,2 @@
+ALTER TABLE news
+    ADD COLUMN description VARCHAR(255) COMMENT '描述';
