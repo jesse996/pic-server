@@ -1,0 +1,2 @@
+ALTER TABLE pic
+    MODIFY COLUMN type TINYINT NOT NULL DEFAULT 0 COMMENT '0:三次元，1：二次元，2：cosplay';
