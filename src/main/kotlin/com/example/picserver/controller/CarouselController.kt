@@ -14,19 +14,19 @@ class CarouselController(@Resource private val carouselService: CarouselService)
     @GetMapping("")
     fun list() = CommonResult.success(carouselService.list())
 
-    @GetMapping("/:id")
-    fun getById(@RequestParam("id") id: Long): CommonResult<Carousel> =
+    @GetMapping("/{id}")
+    fun getById(@PathVariable("id") id: Long): CommonResult<Carousel> =
         CommonResult.success(carouselService.getById(id))
 
     @PostMapping("/")
     fun add(@RequestBody carousel: Carousel): CommonResult<Boolean> =
         CommonResult.success(carouselService.save(carousel))
 
-    @DeleteMapping("/:id")
-    fun delById(@RequestParam("id") id: Long): CommonResult<Boolean> =
+    @DeleteMapping("/{id}")
+    fun delById(@PathVariable("id") id: Long): CommonResult<Boolean> =
         CommonResult.success(carouselService.removeById(id))
 
-    @PutMapping("/:id")
+    @PutMapping("/")
     fun updateById(@RequestBody carousel: Carousel): CommonResult<Boolean> =
         CommonResult.success(carouselService.updateById(carousel))
 }

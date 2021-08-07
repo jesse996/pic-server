@@ -12,7 +12,7 @@ import javax.annotation.Resource
 @RestController
 @RequestMapping("cosplay")
 class CosplayController(@Resource private val picService: PicService) {
-    @PostMapping("")
+    @PostMapping("list")
     fun list(@RequestBody picPageReq: PicPageReq): CommonResult<Page<Pic>> {
         var page = Page<Pic>(picPageReq.current, picPageReq.size)
         val wrapper = LambdaQueryWrapper<Pic>(picPageReq)
@@ -20,15 +20,15 @@ class CosplayController(@Resource private val picService: PicService) {
         return CommonResult.success(page)
     }
 
-    @GetMapping("/:id")
-    fun getById(@RequestParam("id") id: Long) = CommonResult.success(picService.getPicResp(id))
+    @GetMapping("/{id}")
+    fun getById(@PathVariable("id") id: Long) = CommonResult.success(picService.getPicResp(id))
 
     @PostMapping("/")
     fun add(@RequestBody pic: Pic) = CommonResult.success(picService.save(pic))
 
-    @DeleteMapping("/:id")
-    fun delById(@RequestParam("id") id: Long) = CommonResult.success(picService.removeById(id))
+    @DeleteMapping("/{id}")
+    fun delById(@PathVariable("id") id: Long) = CommonResult.success(picService.removeById(id))
 
-    @PutMapping("/:id")
+    @PutMapping("/")
     fun updateById(@RequestBody pic: Pic) = CommonResult.success(picService.updateById(pic))
 }
