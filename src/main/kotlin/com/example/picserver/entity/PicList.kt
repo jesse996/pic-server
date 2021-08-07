@@ -21,6 +21,8 @@ class PicList : Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     var id: Long? = null
+    @ApiModelProperty(value = "pic表中id")
+    var picId: Long? = null
     @ApiModelProperty(value = "图片url列表")
     var urlList: String? = null
     @TableField(fill = FieldFill.INSERT)
@@ -33,6 +35,7 @@ class PicList : Serializable {
     override fun toString(): String {
         return "PicList{" +
         "id=" + id +
+        ", picId=" + picId +
         ", urlList=" + urlList +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
