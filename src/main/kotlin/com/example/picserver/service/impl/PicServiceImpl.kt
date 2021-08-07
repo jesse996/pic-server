@@ -5,6 +5,7 @@ import com.example.picserver.entity.Pic;
 import com.example.picserver.mapper.PicMapper;
 import com.example.picserver.service.PicService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.picserver.entity.PicList
 import com.example.picserver.entity.vo.PicResp
 import com.example.picserver.service.PicListService
 import org.springframework.stereotype.Service;
@@ -26,4 +27,13 @@ open class PicServiceImpl(val picListService: PicListService) : ServiceImpl<PicM
         return picResp
     }
 
+    override fun savePicResp(picResp: PicResp): Boolean {
+        if (this.ktQuery().eq(Pic::url,picResp.url).count()>0) return false
+
+        this.save(picResp)
+        val picList = PicList()
+        picList.urlList = picResp.imgList
+        picList.picId = picResp.id
+        return picListService.save(picList)
+    }
 }

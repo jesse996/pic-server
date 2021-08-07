@@ -21,12 +21,12 @@ class NewsController(val newsService: NewsService) {
     @GetMapping("/{id}")
     fun getById(@PathVariable("id") id: Long) = CommonResult.success(newsService.getById(id))
 
-    @PostMapping("/")
+    @PostMapping("")
     fun add(@RequestBody news: News) = CommonResult.success(newsService.save(news))
 
     @DeleteMapping("/{id}")
     fun delById(@PathVariable("id") id: Long) = CommonResult.success(newsService.removeById(id))
 
-    @PutMapping("/")
+    @PutMapping("")
     fun updateById(@RequestBody news: News) = CommonResult.success(newsService.updateById(news))
 }

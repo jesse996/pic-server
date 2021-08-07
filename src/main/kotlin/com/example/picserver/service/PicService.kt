@@ -14,4 +14,5 @@ import com.example.picserver.entity.vo.PicResp
  */
 interface PicService : IService<Pic> {
     fun getPicResp(id: Long): PicResp
+    fun savePicResp(picResp: PicResp): Boolean
 }
