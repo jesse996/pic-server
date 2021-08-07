@@ -1,8 +1,8 @@
 package com.example.picserver.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -14,10 +14,10 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author jesse
- * @since 2021-08-06
+ * @since 2021-08-07
  */
 @ApiModel(value="Pic对象", description="")
-class Pic : Serializable {
+open class Pic : Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     var id: Long? = null
