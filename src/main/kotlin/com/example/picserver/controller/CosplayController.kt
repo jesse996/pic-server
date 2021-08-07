@@ -21,7 +21,7 @@ class CosplayController(@Resource private val picService: PicService) {
     }
 
     @GetMapping("/:id")
-    fun getById(@RequestParam("id") id: Long) = CommonResult.success(picService.getById(id))
+    fun getById(@RequestParam("id") id: Long) = CommonResult.success(picService.getPicResp(id))
 
     @PostMapping("/")
     fun add(@RequestBody pic: Pic) = CommonResult.success(picService.save(pic))

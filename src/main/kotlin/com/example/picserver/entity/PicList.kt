@@ -1,10 +1,8 @@
 package com.example.picserver.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,6 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2021-08-07
  */
 @ApiModel(value="PicList对象", description="图片列表详情")
+@TableName(autoResultMap = true)
 open class PicList : Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
@@ -24,7 +23,8 @@ open class PicList : Serializable {
     @ApiModelProperty(value = "pic表中id")
     var picId: Long? = null
     @ApiModelProperty(value = "图片url列表")
-    var urlList: String? = null
+    @TableField(typeHandler = JacksonTypeHandler::class)
+    var urlList: List<String>? = null
     @TableField(fill = FieldFill.INSERT)
     var createTime: LocalDateTime? = null
     @TableField(fill = FieldFill.INSERT_UPDATE)

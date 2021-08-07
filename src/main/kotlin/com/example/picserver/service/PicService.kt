@@ -2,6 +2,7 @@ package com.example.picserver.service;
 
 import com.example.picserver.entity.Pic;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.picserver.entity.vo.PicResp
 
 /**
  * <p>
@@ -11,4 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jesse
  * @since 2021-08-06
  */
-interface PicService : IService<Pic>
+interface PicService : IService<Pic> {
+    fun getPicResp(id: Long): PicResp
+}
