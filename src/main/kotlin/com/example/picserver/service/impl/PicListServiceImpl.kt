@@ -16,5 +16,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 open class PicListServiceImpl : ServiceImpl<PicListMapper, PicList>(), PicListService {
-
+    override fun getByPicId(id: Long?): PicList?=
+        this.ktQuery().eq(PicList::picId,id).one()
 }

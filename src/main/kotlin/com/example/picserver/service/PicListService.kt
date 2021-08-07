@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jesse
  * @since 2021-08-07
  */
-interface PicListService : IService<PicList>
+interface PicListService : IService<PicList> {
+    fun getByPicId(id: Long?): PicList?
+}

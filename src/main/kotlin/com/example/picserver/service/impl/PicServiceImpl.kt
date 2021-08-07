@@ -22,7 +22,7 @@ open class PicServiceImpl(val picListService: PicListService) : ServiceImpl<PicM
     override fun getPicResp(id: Long): PicResp {
         val pic = this.getById(id)
         val picResp = BeanUtil.toBean(pic, PicResp::class.java)
-        picResp.imgList = picListService.getById(pic.id)?.urlList
+        picResp.imgList = picListService.getByPicId(pic.id)?.urlList
         return picResp
     }
 
