@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2021-08-06
  */
 @ApiModel(value="Carousel对象", description="轮播图表")
-class Carousel : Serializable {
+open class Carousel : Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     var id: Long? = null

@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2021-08-07
  */
 @ApiModel(value="PicList对象", description="图片列表详情")
-class PicList : Serializable {
+open class PicList : Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     var id: Long? = null
