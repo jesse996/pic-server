@@ -14,15 +14,15 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author jesse
- * @since 2021-08-07
+ * @since 2021-08-08
  */
 @ApiModel(value="News对象", description="轮播图表")
 open class News : Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     var id: Long? = null
-    @ApiModelProperty(value = "封面图片url")
-    var coverUrl: String? = null
+    @ApiModelProperty(value = "封面图")
+    var coverImg: String? = null
     @ApiModelProperty(value = "标题")
     var title: String? = null
     @ApiModelProperty(value = "内容")
@@ -39,7 +39,7 @@ open class News : Serializable {
     override fun toString(): String {
         return "News{" +
         "id=" + id +
-        ", coverUrl=" + coverUrl +
+        ", coverImg=" + coverImg +
         ", title=" + title +
         ", content=" + content +
         ", createTime=" + createTime +
