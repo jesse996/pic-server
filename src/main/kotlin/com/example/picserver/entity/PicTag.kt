@@ -18,8 +18,8 @@ open class PicTag : Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     var id: Long? = null
-    var picId: String? = null
-    var tagId: String? = null
+    var picId: Long? = null
+    var tagId: Long? = null
 
 
     override fun toString(): String {

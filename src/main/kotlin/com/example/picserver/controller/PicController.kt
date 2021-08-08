@@ -1,10 +1,10 @@
 package com.example.picserver.controller
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page
+import com.baomidou.mybatisplus.core.metadata.IPage
 import com.example.picserver.common.CommonResult
 import com.example.picserver.entity.Pic
 import com.example.picserver.entity.vo.PageReq
+import com.example.picserver.entity.vo.PicResp
 import com.example.picserver.service.PicService
 import org.springframework.web.bind.annotation.*
 
@@ -12,27 +12,25 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("pic")
 class PicController(val picService: PicService) {
     @PostMapping("list")
-    fun list(@RequestBody pageReq: PageReq<Pic>): CommonResult<Page<Pic>> {
-        val page = Page<Pic>(pageReq.current, pageReq.size)
-        val wrapper = LambdaQueryWrapper<Pic>(pageReq.data)
-        return CommonResult.success(picService.page(page, wrapper))
-    }
+    fun list(@RequestBody pageReq: PageReq<Pic>): CommonResult<IPage<PicResp>> =
+        CommonResult.success(picService.pagePicResp(pageReq))
+
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable("id") id: Long) = CommonResult.success(picService.getById(id))
+    fun getById(@PathVariable("id") id: Long) = CommonResult.success(picService.getPicRespById(id))
 
     @PostMapping("")
-    fun add(@RequestBody pic: Pic):CommonResult<Boolean> {
-        if (picService.ktQuery().eq(Pic::coverImg,pic.coverImg).eq(Pic::type,pic.type).count()>0){
+    fun add(@RequestBody picResp: PicResp): CommonResult<Boolean> {
+        if (picService.ktQuery().eq(Pic::coverImg, picResp.coverImg).eq(Pic::type, picResp.type).count() > 0) {
             return CommonResult.success(false);
         }
-        return CommonResult.success(picService.save(pic))
+        return CommonResult.success(picService.savePic(picResp))
     }
 
     @DeleteMapping("/{id}")
-    fun delById(@PathVariable("id") id: Long) = CommonResult.success(picService.removeById(id))
+    fun delById(@PathVariable("id") id: Long) = CommonResult.success(picService.removePic(id))
 
     @PutMapping("")
-    fun updateById(@RequestBody pic: Pic) = CommonResult.success(picService.updateById(pic))
+    fun updateById(@RequestBody picResp: PicResp) = CommonResult.success(picService.updatePic(picResp))
 
 }

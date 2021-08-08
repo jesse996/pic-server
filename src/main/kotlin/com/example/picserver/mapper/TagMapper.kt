@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author jesse
  * @since 2021-08-09
  */
-interface TagMapper : BaseMapper<Tag>
+interface TagMapper : BaseMapper<Tag> {
+    fun getByPicId(id: Long): List<Tag>
+}
