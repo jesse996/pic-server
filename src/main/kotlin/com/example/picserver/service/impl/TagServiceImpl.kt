@@ -16,5 +16,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 open class TagServiceImpl : ServiceImpl<TagMapper, Tag>(), TagService {
-
+    override fun getByName(name: String): Tag? {
+        return this.ktQuery()
+            .eq(Tag::name, name)
+            .one()
+    }
 }

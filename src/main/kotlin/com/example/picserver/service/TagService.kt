@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jesse
  * @since 2021-08-09
  */
-interface TagService : IService<Tag>
+interface TagService : IService<Tag> {
+    fun getByName(name: String): Tag?
+}

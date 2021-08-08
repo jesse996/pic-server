@@ -50,7 +50,7 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
     @Transactional
     override fun savePic(picResp: PicResp): Boolean {
         this.save(picResp)
-        addPicTag(picResp)
+        addPicTagByName(picResp)
         return true
     }
 
@@ -69,21 +69,21 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
             .eq(PicTag::picId, picResp.id)
             .remove()
 
-        addPicTag(picResp)
+        addPicTagByName(picResp)
         return true
     }
 
-    fun addPicTag(picResp: PicResp) {
+    fun addPicTagByName(picResp: PicResp) {
         if (CollUtil.isNotEmpty(picResp.tags)) {
-
             val list = picResp.tags!!.map {
                 //如果传的标签不存在，就用传的创建标签
-                if (tagService.getById(it.id) == null) {
+                val tag = tagService.getByName(it.name!!)
+                if (tag == null) {
                     tagService.save(it)
                 }
 
                 val pt = PicTag()
-                pt.tagId = it.id
+                pt.tagId = tag!!.id
                 pt.picId = picResp.id
                 pt
             }
