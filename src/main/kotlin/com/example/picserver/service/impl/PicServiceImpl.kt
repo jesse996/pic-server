@@ -1,22 +1,21 @@
-package com.example.picserver.service.impl;
+package com.example.picserver.service.impl
 
 import cn.hutool.core.bean.BeanUtil
 import cn.hutool.core.collection.CollUtil
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper
 import com.baomidou.mybatisplus.core.metadata.IPage
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
-import com.example.picserver.entity.Pic;
-import com.example.picserver.mapper.PicMapper;
-import com.example.picserver.service.PicService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.picserver.entity.Pic
+import com.example.picserver.mapper.PicMapper
+import com.example.picserver.service.PicService
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import com.example.picserver.entity.PicTag
-import com.example.picserver.entity.Tag
 import com.example.picserver.entity.vo.PageReq
 import com.example.picserver.entity.vo.PicResp
 import com.example.picserver.mapper.TagMapper
 import com.example.picserver.service.PicTagService
 import com.example.picserver.service.TagService
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import javax.annotation.Resource
 
@@ -29,11 +28,11 @@ import javax.annotation.Resource
  * @since 2021-08-07
  */
 @Service
-open class PicServiceImpl(val tagMapper: TagMapper, val tagService: TagService, val picTagService: PicTagService) :
+class PicServiceImpl(val tagService: TagService, val picTagService: PicTagService) :
     ServiceImpl<PicMapper, Pic>(),
     PicService {
-//    @Resource
-//    lateinit var tagMapper: TagMapper
+    @Resource
+    lateinit var tagMapper: TagMapper
 
     override fun pagePicResp(pageReq: PageReq<Pic>): IPage<PicResp> {
         val page = Page<Pic>(pageReq.current, pageReq.size)

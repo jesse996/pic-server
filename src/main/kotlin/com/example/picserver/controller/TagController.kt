@@ -1,11 +1,8 @@
-package com.example.Tagserver.controller
+package com.example.picserver.controller
 
-import cn.hutool.json.XMLTokener.entity
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import com.example.picserver.common.CommonResult
 import com.example.picserver.entity.Tag
-import com.example.picserver.entity.vo.PageReq
 import com.example.picserver.service.TagService
 import org.springframework.web.bind.annotation.*
 
