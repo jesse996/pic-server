@@ -77,13 +77,14 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
         if (CollUtil.isNotEmpty(picResp.tags)) {
             val list = picResp.tags!!.map {
                 //如果传的标签不存在，就用传的创建标签
-                val tag = tagService.getByName(it.name!!)
+                var tag = tagService.getByName(it.name!!)
                 if (tag == null) {
                     tagService.save(it)
+                    tag = it
                 }
 
                 val pt = PicTag()
-                pt.tagId = tag!!.id
+                pt.tagId = tag.id
                 pt.picId = picResp.id
                 pt
             }
