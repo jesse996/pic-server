@@ -16,5 +16,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 open class NewsServiceImpl : ServiceImpl<NewsMapper, News>(), NewsService {
+    override fun search(keyword: String) =
+        this.ktQuery()
+            .like(News::title, keyword)
+            .or()
+            .like(News::description, keyword)
+            .list()
 
 }

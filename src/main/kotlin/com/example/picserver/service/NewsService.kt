@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jesse
  * @since 2021-08-06
  */
-interface NewsService : IService<News>
+interface NewsService : IService<News> {
+    abstract fun search(keyword: String): List<News>
+}

@@ -6,7 +6,9 @@ import com.example.picserver.common.CommonResult
 import com.example.picserver.entity.News
 import com.example.picserver.entity.vo.PageReq
 import com.example.picserver.service.NewsService
+import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.*
+import javax.websocket.server.PathParam
 
 @RestController
 @RequestMapping("news")
@@ -29,4 +31,8 @@ class NewsController(val newsService: NewsService) {
 
     @PutMapping("")
     fun updateById(@RequestBody news: News) = CommonResult.success(newsService.updateById(news))
+
+    @ApiOperation("搜索")
+    @GetMapping("search")
+    fun search(@PathParam("keyword") keyword: String) = CommonResult.success(newsService.search(keyword))
 }
