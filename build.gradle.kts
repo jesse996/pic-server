@@ -10,7 +10,6 @@ plugins {
     id("org.graalvm.buildtools.native") version "0.9.1"
 
     id("org.flywaydb.flyway") version "7.9.2"
-    id("net.ltgt.apt-idea") version "0.21"
 
 }
 
@@ -40,7 +39,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+//    developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("mysql:mysql-connector-java")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
