@@ -1,0 +1,2 @@
+ALTER TABLE pic
+    MODIFY COLUMN description VARCHAR(1000) COMMENT '描述';
