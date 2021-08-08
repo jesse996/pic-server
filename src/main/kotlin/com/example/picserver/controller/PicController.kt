@@ -22,7 +22,12 @@ class PicController(val picService: PicService) {
     fun getById(@PathVariable("id") id: Long) = CommonResult.success(picService.getById(id))
 
     @PostMapping("")
-    fun add(@RequestBody pic: Pic) = CommonResult.success(picService.save(pic))
+    fun add(@RequestBody pic: Pic):CommonResult<Boolean> {
+        if (picService.ktQuery().eq(Pic::coverImg,pic.coverImg).eq(Pic::type,pic.type).count()>0){
+            return CommonResult.success(false);
+        }
+        return CommonResult.success(picService.save(pic))
+    }
 
     @DeleteMapping("/{id}")
     fun delById(@PathVariable("id") id: Long) = CommonResult.success(picService.removeById(id))
