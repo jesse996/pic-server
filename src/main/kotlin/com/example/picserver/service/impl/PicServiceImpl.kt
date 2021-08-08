@@ -10,6 +10,7 @@ import com.example.picserver.mapper.PicMapper;
 import com.example.picserver.service.PicService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.picserver.entity.PicTag
+import com.example.picserver.entity.Tag
 import com.example.picserver.entity.vo.PageReq
 import com.example.picserver.entity.vo.PicResp
 import com.example.picserver.mapper.TagMapper
@@ -75,7 +76,13 @@ open class PicServiceImpl(val tagMapper: TagMapper, val tagService: TagService, 
 
     fun addPicTag(picResp: PicResp) {
         if (CollUtil.isNotEmpty(picResp.tags)) {
+
             val list = picResp.tags!!.map {
+                //如果传的标签不存在，就用传的创建标签
+                if (tagService.getById(it.id) == null) {
+                    tagService.save(it)
+                }
+
                 val pt = PicTag()
                 pt.tagId = it.id
                 pt.picId = picResp.id
