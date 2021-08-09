@@ -4,6 +4,8 @@ import cn.hutool.core.bean.BeanUtil
 import cn.hutool.core.collection.CollUtil
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper
 import com.baomidou.mybatisplus.core.metadata.IPage
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import com.example.picserver.entity.Pic
 import com.example.picserver.mapper.PicMapper
@@ -36,7 +38,7 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
 
     override fun pagePicResp(pageReq: PageReq<Pic>): IPage<PicResp> {
         val page = Page<Pic>(pageReq.current, pageReq.size)
-        val wrapper = LambdaQueryWrapper<Pic>(pageReq.data)
+        val wrapper = KtQueryWrapper(pageReq.data!!)
         return this.page(page, wrapper).convert { getPicRespById(it.id!!) }
     }
 
