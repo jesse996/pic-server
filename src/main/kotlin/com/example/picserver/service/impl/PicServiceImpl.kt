@@ -46,6 +46,10 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
         val pic = this.getById(id)
         val picResp = BeanUtil.toBean(pic, PicResp::class.java)
         picResp.tags = tagMapper.getByPicId(id)
+
+        //修改url
+        picResp.coverImg = transPicUrl(picResp.coverImg!!,picResp.title!!)
+
         return picResp
     }
 
@@ -92,5 +96,10 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
             }
             picTagService.saveBatch(list)
         }
+    }
+
+    fun transPicUrl(originUrl: String, title: String): String {
+        val filename = originUrl.split("/").last()
+        return "http://jesse996.f3322.net:1235/static/$title/$filename"
     }
 }

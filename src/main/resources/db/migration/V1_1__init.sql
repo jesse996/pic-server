@@ -13,7 +13,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- 导出  表 pic.carousel 结构
-DROP TABLE IF EXISTS `carousel`;
 CREATE TABLE IF NOT EXISTS `carousel` (
                                           `id` bigint NOT NULL AUTO_INCREMENT,
                                           `url` varchar(255) DEFAULT NULL COMMENT '图片url',
@@ -26,7 +25,6 @@ CREATE TABLE IF NOT EXISTS `carousel` (
 -- 数据导出被取消选择。
 
 -- 导出  表 pic.news 结构
-DROP TABLE IF EXISTS `news`;
 CREATE TABLE IF NOT EXISTS `news` (
                                       `id` bigint NOT NULL AUTO_INCREMENT,
                                       `cover_img` varchar(300) DEFAULT NULL COMMENT '封面图',
@@ -42,7 +40,6 @@ CREATE TABLE IF NOT EXISTS `news` (
 -- 数据导出被取消选择。
 
 -- 导出  表 pic.pic 结构
-DROP TABLE IF EXISTS `pic`;
 CREATE TABLE IF NOT EXISTS `pic` (
                                      `id` bigint NOT NULL AUTO_INCREMENT,
                                      `cover_img` varchar(100) DEFAULT NULL COMMENT '封面图',
@@ -60,7 +57,6 @@ CREATE TABLE IF NOT EXISTS `pic` (
 -- 数据导出被取消选择。
 
 -- 导出  表 pic.pic_tag 结构
-DROP TABLE IF EXISTS `pic_tag`;
 CREATE TABLE IF NOT EXISTS `pic_tag` (
                                          `id` bigint NOT NULL AUTO_INCREMENT,
                                          `pic_id` bigint NOT NULL,
@@ -71,7 +67,6 @@ CREATE TABLE IF NOT EXISTS `pic_tag` (
 -- 数据导出被取消选择。
 
 -- 导出  表 pic.tag 结构
-DROP TABLE IF EXISTS `tag`;
 CREATE TABLE IF NOT EXISTS `tag` (
                                      `id` bigint NOT NULL AUTO_INCREMENT,
                                      `name` varchar(50) NOT NULL COMMENT 'tag名',
