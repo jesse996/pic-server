@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `carousel` (
                                           `update_time` datetime DEFAULT CURRENT_TIMESTAMP,
                                           `deleted` tinyint DEFAULT '0',
                                           PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='轮播图表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='轮播图表';
 
 -- 数据导出被取消选择。
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `news` (
                                       `deleted` tinyint DEFAULT '0',
                                       `description` varchar(255) DEFAULT NULL COMMENT '描述',
                                       PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=416 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='轮播图表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='轮播图表';
 
 -- 数据导出被取消选择。
 
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `pic` (
                                      `update_time` datetime DEFAULT CURRENT_TIMESTAMP,
                                      `img_list` json DEFAULT NULL COMMENT '图片列表',
                                      PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2282 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 数据导出被取消选择。
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `pic_tag` (
                                          `pic_id` bigint NOT NULL,
                                          `tag_id` bigint NOT NULL,
                                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='pic_tag表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='pic_tag表';
 
 -- 数据导出被取消选择。
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `tag` (
                                      `update_time` datetime DEFAULT CURRENT_TIMESTAMP,
                                      `deleted` tinyint DEFAULT '0',
                                      PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='标签表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='标签表';
 
 -- 数据导出被取消选择。
 

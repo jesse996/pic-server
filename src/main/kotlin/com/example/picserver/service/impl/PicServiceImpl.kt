@@ -48,8 +48,9 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
         picResp.tags = tagMapper.getByPicId(id)
 
         //修改url
-        picResp.coverImg = transPicUrl(picResp.coverImg!!,picResp.title!!)
-
+        picResp.coverImg = transPicUrl(picResp.coverImg!!, picResp.title!!)
+        picResp.imgList = picResp.imgList?.map { transPicUrl(it, picResp.title!!) }
+        println("coverImg:${picResp.coverImg}")
         return picResp
     }
 
