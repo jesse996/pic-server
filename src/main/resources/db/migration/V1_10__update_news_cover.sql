@@ -1,2 +1,0 @@
-ALTER TABLE news
-    MODIFY COLUMN cover_img VARCHAR(300) COMMENT '封面图';

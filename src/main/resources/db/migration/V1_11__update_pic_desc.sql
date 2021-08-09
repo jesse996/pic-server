@@ -1,2 +1,0 @@
-ALTER TABLE pic
-    MODIFY COLUMN description TEXT COMMENT '描述';
