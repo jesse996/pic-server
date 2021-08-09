@@ -47,10 +47,11 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
         val picResp = BeanUtil.toBean(pic, PicResp::class.java)
         picResp.tags = tagMapper.getByPicId(id)
 
-        //修改url
-        picResp.coverImg = transPicUrl(picResp.coverImg!!, picResp.title!!)
-        picResp.imgList = picResp.imgList?.map { transPicUrl(it, picResp.title!!) }
-        println("coverImg:${picResp.coverImg}")
+        //mzitu里的图片要修改url
+        if (picResp.src?.contains("mzitu.com") == true) {
+            picResp.coverImg = transPicUrl(picResp.coverImg!!, picResp.title!!)
+            picResp.imgList = picResp.imgList?.map { transPicUrl(it, picResp.title!!) }
+        }
         return picResp
     }
 
