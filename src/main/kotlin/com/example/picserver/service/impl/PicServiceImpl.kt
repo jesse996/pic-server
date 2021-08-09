@@ -38,7 +38,7 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
 
     override fun pagePicResp(pageReq: PageReq<Pic>): IPage<PicResp> {
         val page = Page<Pic>(pageReq.current, pageReq.size)
-        val wrapper = KtQueryWrapper(pageReq.data!!)
+        val wrapper = KtQueryWrapper(pageReq.data!!).orderByDesc(Pic::createTime)
         return this.page(page, wrapper).convert { getPicRespById(it.id!!) }
     }
 

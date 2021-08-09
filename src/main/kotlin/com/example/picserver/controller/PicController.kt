@@ -21,7 +21,7 @@ class PicController(val picService: PicService) {
 
     @PostMapping("")
     fun add(@RequestBody picResp: PicResp): CommonResult<Boolean> {
-        if (picService.ktQuery().eq(Pic::coverImg, picResp.coverImg).eq(Pic::type, picResp.type).count() > 0) {
+        if (picService.ktQuery().eq(Pic::coverImg, picResp.coverImg).count() > 0) {
             return CommonResult.success(false);
         }
         return CommonResult.success(picService.savePic(picResp))
