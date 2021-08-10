@@ -41,7 +41,7 @@ class CacheConfig : CachingConfigurerSupport() {
 
     private fun getRedisCacheConfigurationWithTtl(redisSerializer: RedisSerializer<Any>): RedisCacheConfiguration =
         RedisCacheConfiguration.defaultCacheConfig()
-            .prefixCacheNameWith("pic:")
+            .prefixCacheNameWith("picServer:")
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
             .entryTtl(Duration.ofDays(1))
 
