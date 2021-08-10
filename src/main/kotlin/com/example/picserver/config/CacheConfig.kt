@@ -26,15 +26,24 @@ class CacheConfig : CachingConfigurerSupport() {
         @Qualifier("redisConnectionFactory") factory: RedisConnectionFactory?,
         redisSerializer: RedisSerializer<Any>
     ): CacheManager {
+
+        // 针对不同cacheName，设置不同的过期时间
+        val initialCacheConfiguration = mapOf(
+            "news" to RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1)),
+            "pic" to RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1))
+        )
+
         return RedisCacheManager.builder(factory!!)
             .cacheDefaults(getRedisCacheConfigurationWithTtl(redisSerializer))
+            .withInitialCacheConfigurations(initialCacheConfiguration) // 不同cache的个性化配置
             .build()
     }
 
     private fun getRedisCacheConfigurationWithTtl(redisSerializer: RedisSerializer<Any>): RedisCacheConfiguration =
-        RedisCacheConfiguration.defaultCacheConfig().prefixCacheNameWith("pic:")
+        RedisCacheConfiguration.defaultCacheConfig()
+            .prefixCacheNameWith("pic:")
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
-            .entryTtl(Duration.ofMinutes(60))
+            .entryTtl(Duration.ofDays(1))
 
 
     override fun keyGenerator(): KeyGenerator? {
