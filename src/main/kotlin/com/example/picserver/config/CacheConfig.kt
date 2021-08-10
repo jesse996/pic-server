@@ -57,7 +57,7 @@ class CacheConfig : CachingConfigurerSupport() {
                 sb.append('[')
                 for (obj in params) {
                     if (obj != null) {
-                        sb.append(JSONUtil.toJsonStr(obj))
+                        sb.append(obj.toString())
                     }
                 }
                 sb.append(']')
