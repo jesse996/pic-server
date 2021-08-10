@@ -21,7 +21,7 @@ class TagController(val tagService: TagService) {
         return CommonResult.success(tagService.list(wrapper))
     }
 
-    @Cacheable(key = "#{id}")
+    @Cacheable(key = "#id")
     @GetMapping("/{id}")
     fun getById(@PathVariable("id") id: Long) = CommonResult.success(tagService.getById(id))
 
@@ -33,11 +33,11 @@ class TagController(val tagService: TagService) {
         return CommonResult.success(tagService.save(tag))
     }
 
-    @CacheEvict(key = "#{id}")
+    @CacheEvict(key = "#id")
     @DeleteMapping("/{id}")
     fun delById(@PathVariable("id") id: Long) = CommonResult.success(tagService.removeById(id))
 
-    @CachePut(key = "#{tag.id}")
+    @CachePut(key = "#tag.id")
     @PutMapping("")
     fun updateById(@RequestBody tag: Tag) = CommonResult.success(tagService.updateById(tag))
 

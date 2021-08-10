@@ -21,7 +21,7 @@ class PicController(val picService: PicService) {
     fun list(@RequestBody pageReq: PageReq<Pic>): CommonResult<IPage<PicResp>> =
         CommonResult.success(picService.pagePicResp(pageReq))
 
-    @Cacheable(key = "#{id}")
+    @Cacheable(key = "#id")
     @GetMapping("/{id}")
     fun getById(@PathVariable("id") id: Long) = CommonResult.success(picService.getPicRespById(id))
 
@@ -33,11 +33,11 @@ class PicController(val picService: PicService) {
         return CommonResult.success(picService.savePic(picResp))
     }
 
-    @CacheEvict(key = "#{id}")
+    @CacheEvict(key = "#id")
     @DeleteMapping("/{id}")
     fun delById(@PathVariable("id") id: Long) = CommonResult.success(picService.removePic(id))
 
-    @CachePut(key = "#{picResp.id}")
+    @CachePut(key = "#picResp.id")
     @PutMapping("")
     fun updateById(@RequestBody picResp: PicResp) = CommonResult.success(picService.updatePic(picResp))
 

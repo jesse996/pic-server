@@ -27,18 +27,18 @@ class NewsController(val newsService: NewsService) {
         return CommonResult.success(newsService.page(page, wrapper))
     }
 
-    @Cacheable(key = "#{id}")
+    @Cacheable(key = "#id")
     @GetMapping("/{id}")
     fun getById(@PathVariable("id") id: Long) = CommonResult.success(newsService.getById(id))
 
     @PostMapping("")
     fun add(@RequestBody news: News) = CommonResult.success(newsService.save(news))
 
-    @CacheEvict(key = "#{id}")
+    @CacheEvict(key = "#id")
     @DeleteMapping("/{id}")
     fun delById(@PathVariable("id") id: Long) = CommonResult.success(newsService.removeById(id))
 
-    @CachePut(key = "#{news.id}")
+    @CachePut(key = "#news.id")
     @PutMapping("")
     fun updateById(@RequestBody news: News) = CommonResult.success(newsService.updateById(news))
 
