@@ -57,16 +57,8 @@ dependencies {
     implementation("com.baomidou:mybatis-plus-generator:3.4.1")
     implementation("org.apache.velocity:velocity-engine-core:2.3")
 
-    //  fluent mybatis
-//    implementation("com.github.atool:fluent-mybatis:${ext.get("fluentMybatisVersion")}")
-//    compileOnly("org.projectlombok:lombok:${ext.get("lombokVersion")}")
-//    compileOnly("com.github.atool:fluent-mybatis-processor:${ext.get("fluentMybatisVersion")}")
-//
-//    // fluent mybatis annotation processor配置
-//    annotationProcessor("org.projectlombok:lombok:${ext.get("lombokVersion")}")
-//    annotationProcessor("com.github.atool:fluent-mybatis-processor:${ext.get("fluentMybatisVersion")}")
-//
-//    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0")
+    implementation("org.apache.commons:commons-pool2")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 }
 
 tasks.withType<KotlinCompile> {

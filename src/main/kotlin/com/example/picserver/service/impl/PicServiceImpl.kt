@@ -102,6 +102,6 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
 
     fun transPicUrl(originUrl: String, title: String): String {
         val filename = originUrl.split("/").last()
-        return "http://jesse996.f3322.net:1235/static/$title/$filename"
+        return "https://api.jesse233.top:1234/static/$title/$filename"
     }
 }
