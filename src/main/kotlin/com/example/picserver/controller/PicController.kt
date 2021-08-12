@@ -6,6 +6,7 @@ import com.example.picserver.entity.Pic
 import com.example.picserver.entity.vo.PageReq
 import com.example.picserver.entity.vo.PicResp
 import com.example.picserver.service.PicService
+import io.swagger.annotations.ApiOperation
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.CachePut
@@ -41,4 +42,20 @@ class PicController(val picService: PicService) {
     @PutMapping("")
     fun updateById(@RequestBody picResp: PicResp) = CommonResult.success(picService.updatePic(picResp))
 
+    @ApiOperation("更新图片时间")
+    @GetMapping("updateTime")
+    fun updateTime(): Boolean {
+        val list = picService.ktQuery()
+            .eq(Pic::src, "www.mzitu.com")
+            .list()
+        list.sortBy { it.createTime }
+        var count = list.size.toLong()
+        for (i in list) {
+            i.createTime = i.createTime?.plusMinutes(count*5)
+            i.updateTime = i.createTime
+            count --
+        }
+        picService.updateBatchById(list)
+        return true
+    }
 }
