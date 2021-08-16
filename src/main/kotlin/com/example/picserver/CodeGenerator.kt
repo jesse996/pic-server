@@ -100,9 +100,9 @@ fun main() {
     cfg.fileCreate = IFileCreate { _: ConfigBuilder?, fileType: FileType, filePath: String ->
         // 判断自定义文件夹是否需要创建
 //                checkDir("调用默认方法创建的目录，自定义目录用");
-        if (fileType == FileType.CONTROLLER) {
-            return@IFileCreate false
-        }
+//        if (fileType == FileType.CONTROLLER) {
+//            return@IFileCreate false
+//        }
         if (fileType == FileType.MAPPER || fileType == FileType.SERVICE || fileType == FileType.SERVICE_IMPL || fileType == FileType.XML) {
             // 已经生成 mapper 文件判断存在，不想重新生成返回 false
             return@IFileCreate !File(filePath).exists()
