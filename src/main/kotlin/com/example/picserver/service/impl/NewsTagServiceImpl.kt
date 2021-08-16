@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.picserver.entity.Tag
 import com.example.picserver.service.TagService
 import org.springframework.stereotype.Service;
+import java.util.*
 import kotlin.math.tan
 
 /**
@@ -35,5 +36,12 @@ open class NewsTagServiceImpl(val tagService: TagService) : ServiceImpl<NewsTagM
             newsTag.newsId = id
             this.save(newsTag)
         }
+    }
+
+    override fun getNewsTags(id: Long?): List<String> {
+        val tagIds = this.ktQuery()
+            .eq(NewsTag::newsId, id)
+            .list()
+        return tagIds.map { tagService.getById(it)?.name?:"" }.filter { it.isNotBlank()}
     }
 }

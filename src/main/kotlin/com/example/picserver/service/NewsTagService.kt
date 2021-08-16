@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 interface NewsTagService : IService<NewsTag> {
     fun setNewsTags(id: Long, tags: List<String>)
+    fun getNewsTags (id: Long?): List<String>
 }

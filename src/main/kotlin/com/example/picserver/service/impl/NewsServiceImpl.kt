@@ -1,5 +1,7 @@
 package com.example.picserver.service.impl;
 
+import cn.hutool.core.bean.BeanUtil
+import cn.hutool.core.collection.CollUtil
 import com.example.picserver.entity.News;
 import com.example.picserver.mapper.NewsMapper;
 import com.example.picserver.service.NewsService;
@@ -29,20 +31,32 @@ open class NewsServiceImpl(val categoryService: CategoryService, val newsTagServ
 
     override fun saveNews(news: NewsVo): Boolean {
         //防止重复
-        if (this.ktQuery().eq(News::coverImg,news.coverImg).count()>0){
+        if (this.ktQuery().eq(News::coverImg, news.coverImg).count() > 0) {
             return false
         }
 
         this.save(news)
+
         //设置类别
-        val category = categoryService.getByName(news.category)
-        news.categoryId = category.id
+        if (news.category!=null) {
+            val category = categoryService.getByName(news.category!!)
+            news.categoryId = category.id
+        }
+
         //设置标签
-        newsTagService.setNewsTags(news.id!!, news.tags)
+        if (CollUtil.isNotEmpty(news.tags)) {
+            newsTagService.setNewsTags(news.id!!, news.tags!!)
+        }
         return true
     }
 
     override fun getNewsById(id: Long): NewsVo {
-        TODO("Not yet implemented")
+        val news = this.getById(id)
+        println(news)
+        val res = BeanUtil.toBean(news, NewsVo::class.java)
+
+        res.category = categoryService.getById(res.categoryId)?.name
+        res.tags = newsTagService.getNewsTags(res.id)
+        return res
     }
 }
