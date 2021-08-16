@@ -56,24 +56,24 @@ class MybatisPlusConfig {
                 )
             }
 
-            /**
-             * 当被填充的字段有值时 不 忽略填充（默认有值会忽略）
-             * @param metaObject
-             * @param fieldName
-             * @param fieldVal
-             * @return
-             */
-            override fun strictFillStrategy(
-                metaObject: MetaObject,
-                fieldName: String,
-                fieldVal: Supplier<*>
-            ): MetaObjectHandler {
-                val obj = fieldVal.get()
-                if (Objects.nonNull(obj)) {
-                    metaObject.setValue(fieldName, obj)
-                }
-                return this
-            }
+//            /**
+//             * 当被填充的字段有值时 不 忽略填充（默认有值会忽略）
+//             * @param metaObject
+//             * @param fieldName
+//             * @param fieldVal
+//             * @return
+//             */
+//            override fun strictFillStrategy(
+//                metaObject: MetaObject,
+//                fieldName: String,
+//                fieldVal: Supplier<*>
+//            ): MetaObjectHandler {
+//                val obj = fieldVal.get()
+//                if (Objects.nonNull(obj)) {
+//                    metaObject.setValue(fieldName, obj)
+//                }
+//                return this
+//            }
         }
     }
 }
