@@ -12,11 +12,13 @@ import com.example.picserver.mapper.PicMapper
 import com.example.picserver.service.PicService
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import com.example.picserver.entity.PicTag
+import com.example.picserver.entity.ViewCount
 import com.example.picserver.entity.vo.PageReq
 import com.example.picserver.entity.vo.PicResp
 import com.example.picserver.mapper.TagMapper
 import com.example.picserver.service.PicTagService
 import com.example.picserver.service.TagService
+import com.example.picserver.service.ViewCountService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import javax.annotation.Resource
@@ -30,7 +32,11 @@ import javax.annotation.Resource
  * @since 2021-08-07
  */
 @Service
-class PicServiceImpl(val tagService: TagService, val picTagService: PicTagService) :
+class PicServiceImpl(
+    val tagService: TagService,
+    val picTagService: PicTagService,
+    val viewCountService: ViewCountService
+) :
     ServiceImpl<PicMapper, Pic>(),
     PicService {
     @Resource
@@ -43,6 +49,10 @@ class PicServiceImpl(val tagService: TagService, val picTagService: PicTagServic
     }
 
     override fun getPicRespById(id: Long): PicResp {
+        //浏览量+1
+        viewCountService.increase(id,0)
+
+        //返回数据
         val pic = this.getById(id)
         val picResp = BeanUtil.toBean(pic, PicResp::class.java)
         picResp.tags = tagMapper.getByPicId(id)
