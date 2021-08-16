@@ -1,6 +1,5 @@
 package com.example.picserver.config
 
-import cn.hutool.json.JSONUtil
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.annotation.CachingConfigurerSupport
@@ -13,13 +12,12 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.cache.RedisCacheConfiguration
 import org.springframework.data.redis.cache.RedisCacheManager
 import org.springframework.data.redis.serializer.RedisSerializationContext
-import org.springframework.util.StringUtils
 import java.lang.StringBuilder
 import java.lang.reflect.Method
 import java.time.Duration
 
 @Configuration
-@EnableCaching
+//@EnableCaching
 class CacheConfig : CachingConfigurerSupport() {
     @Bean
     fun cacheManager(
