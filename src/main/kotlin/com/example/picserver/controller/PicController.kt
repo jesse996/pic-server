@@ -28,8 +28,9 @@ class PicController(val picService: PicService) {
 
     @PostMapping("")
     fun add(@RequestBody picResp: PicResp): CommonResult<Boolean> {
+        //根据封面图去重
         if (picService.ktQuery().eq(Pic::coverImg, picResp.coverImg).count() > 0) {
-            return CommonResult.success(false);
+            return CommonResult.success(false)
         }
         return CommonResult.success(picService.savePic(picResp))
     }
