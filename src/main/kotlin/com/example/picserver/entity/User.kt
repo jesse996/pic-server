@@ -29,6 +29,8 @@ open class User : Serializable {
     var createTime: LocalDateTime? = null
     @TableField(fill = FieldFill.INSERT_UPDATE)
     var updateTime: LocalDateTime? = null
+    @ApiModelProperty(value = "密码")
+    var password: String? = null
 
 
     override fun toString(): String {
@@ -38,6 +40,7 @@ open class User : Serializable {
         ", username=" + username +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
+        ", password=" + password +
         "}"
     }
 }

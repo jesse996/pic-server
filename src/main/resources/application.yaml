@@ -46,3 +46,9 @@ mybatis-plus:
 
 #server:
 #  port: 8000
+
+jwt:
+  secret: jesse
+  expiration: 3600
+  tokenHeader: Authentication
+  tokenHead: Bearer

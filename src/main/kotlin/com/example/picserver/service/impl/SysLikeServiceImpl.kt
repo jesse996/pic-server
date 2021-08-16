@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 open class SysLikeServiceImpl(val userService: UserService) : ServiceImpl<SysLikeMapper, SysLike>(), SysLikeService {
     override fun like(likeReq: LikeReq): Boolean {
+        TODO("get uset id")
         val like = this.ktQuery()
             .eq(SysLike::type, likeReq.type)
             .eq(SysLike::objId, likeReq.objId)
