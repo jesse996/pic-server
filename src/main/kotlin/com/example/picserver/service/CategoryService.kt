@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jesse
  * @since 2021-08-16
  */
-interface CategoryService : IService<Category>
+interface CategoryService : IService<Category> {
+    fun getByName(category: String):Category
+}

@@ -16,5 +16,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 open class CategoryServiceImpl : ServiceImpl<CategoryMapper, Category>(), CategoryService {
-
+    override fun getByName(category: String): Category {
+        var res = this.ktQuery()
+            .eq(Category::name, category)
+            .one()
+        if (res == null) {
+            val tmp = Category()
+            tmp.name = category
+            this.save(tmp)
+            res = tmp
+        }
+        return res
+    }
 }

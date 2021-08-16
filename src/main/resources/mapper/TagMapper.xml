@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.picserver.mapper.TagMapper">
-
+    <select id="getByPicId" resultType="com.example.picserver.entity.Tag">
+        select *
+        from tag t
+                 inner join pic_tag pt on t.id = pt.tag_id
+        where pt.pic_id = #{id}
+    </select>
 </mapper>
