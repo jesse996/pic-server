@@ -64,7 +64,10 @@ open class UserServiceImpl(
         val tmp = User()
         tmp.username = user.username
         tmp.nickname = user.nickname
-        tmp.password = user.password
+
+        val encode = passwordEncoder.encode(user.password)
+        tmp.password = encode
+        println(encode)
         return this.save(tmp)
     }
 

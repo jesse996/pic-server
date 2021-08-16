@@ -1,0 +1,4 @@
+ALTER TABLE user
+    MODIFY COLUMN password VARCHAR(255) NOT NULL COMMENT '密码';
+
+
