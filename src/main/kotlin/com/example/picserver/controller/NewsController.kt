@@ -1,7 +1,6 @@
 package com.example.picserver.controller
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page
+import com.baomidou.mybatisplus.core.metadata.IPage
 import com.example.picserver.common.CommonResult
 import com.example.picserver.entity.News
 import com.example.picserver.entity.vo.NewsVo
@@ -22,10 +21,8 @@ class NewsController(val newsService: NewsService) {
     @ApiOperation("分页查询")
     @Cacheable
     @PostMapping("list")
-    fun list(@RequestBody pageReq: PageReq<News>): CommonResult<Page<News>> {
-        val page = Page<News>(pageReq.current, pageReq.size)
-        val wrapper = LambdaQueryWrapper<News>(pageReq.data)
-        return CommonResult.success(newsService.page(page, wrapper))
+    fun list(@RequestBody pageReq: PageReq<News>): CommonResult<IPage<NewsVo>> {
+        return CommonResult.success(newsService.getPage(pageReq))
     }
 
     @Cacheable(key = "#id")

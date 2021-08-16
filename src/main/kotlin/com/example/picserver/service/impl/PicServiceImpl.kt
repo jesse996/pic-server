@@ -44,13 +44,17 @@ class PicServiceImpl(
 
     override fun pagePicResp(pageReq: PageReq<Pic>): IPage<PicResp> {
         val page = Page<Pic>(pageReq.current, pageReq.size)
-        val wrapper = KtQueryWrapper(pageReq.data!!).orderByDesc(Pic::createTime)
+        val wrapper = if (pageReq.data == null) {
+            KtQueryWrapper(Pic())
+        } else {
+            KtQueryWrapper(pageReq.data)
+        }.orderByDesc(Pic::createTime)
         return this.page(page, wrapper).convert { getPicRespById(it.id!!) }
     }
 
     override fun getPicRespById(id: Long): PicResp {
         //浏览量+1
-        viewCountService.increase(id,0)
+        viewCountService.increase(id, 0)
 
         //返回数据
         val pic = this.getById(id)
