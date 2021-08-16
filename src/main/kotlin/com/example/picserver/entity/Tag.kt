@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author jesse
- * @since 2021-08-09
+ * @since 2021-08-16
  */
 @ApiModel(value="Tag对象", description="标签表")
 open class Tag : Serializable {
@@ -25,7 +25,7 @@ open class Tag : Serializable {
     var name: String? = null
     @ApiModelProperty(value = "封面图")
     var coverImg: String? = null
-    @ApiModelProperty(value = "0:类别，1：专辑")
+    @ApiModelProperty(value = "0:pic,1:news")
     var type: Int? = null
     @TableField(fill = FieldFill.INSERT)
     var createTime: LocalDateTime? = null
