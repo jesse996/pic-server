@@ -28,9 +28,7 @@ open class Pic : Serializable {
     var description: String? = null
     @ApiModelProperty(value = "来源")
     var src: String? = null
-    @ApiModelProperty(value = "名字")
-    var name: String? = null
-    @ApiModelProperty(value = "0:三次元，1：二次元，2：cosplay")
+    @ApiModelProperty(value = "0:性感妹子,1:二次元,2:cosplay,3:清纯妹子")
     var type: Int? = null
     @TableField(fill = FieldFill.INSERT)
     var createTime: LocalDateTime? = null
@@ -48,7 +46,6 @@ open class Pic : Serializable {
         ", title=" + title +
         ", description=" + description +
         ", src=" + src +
-        ", name=" + name +
         ", type=" + type +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
