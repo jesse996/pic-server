@@ -25,7 +25,7 @@ open class ViewCountServiceImpl : ServiceImpl<ViewCountMapper, ViewCount>(), Vie
         if (viewCount == null) {
             val tmp = ViewCount()
             tmp.targetId = id
-            tmp.type = 0
+            tmp.type = type
             tmp.count = 0
             this.save(tmp)
             viewCount = tmp
@@ -35,9 +35,9 @@ open class ViewCountServiceImpl : ServiceImpl<ViewCountMapper, ViewCount>(), Vie
         this.updateById(viewCount)
     }
 
-    override fun getByPicId(id: Long): ViewCount =
+    override fun getByPicId(id: Long): ViewCount? =
         this.ktQuery().eq(ViewCount::targetId, id).eq(ViewCount::type, ViewCountEnum.PIC.code).one()
 
-    override fun getByNewsId(id: Long): ViewCount =
+    override fun getByNewsId(id: Long): ViewCount? =
         this.ktQuery().eq(ViewCount::targetId, id).eq(ViewCount::type, ViewCountEnum.NEWS.code).one()
 }

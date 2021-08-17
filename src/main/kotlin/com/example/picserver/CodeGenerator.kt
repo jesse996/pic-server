@@ -100,10 +100,10 @@ fun main() {
     cfg.fileCreate = IFileCreate { _: ConfigBuilder?, fileType: FileType, filePath: String ->
         // 判断自定义文件夹是否需要创建
 //                checkDir("调用默认方法创建的目录，自定义目录用");
-//        if (fileType == FileType.CONTROLLER) {
-//            return@IFileCreate false
-//        }
-        if (fileType == FileType.MAPPER || fileType == FileType.SERVICE || fileType == FileType.SERVICE_IMPL || fileType == FileType.XML) {
+        if (fileType == FileType.CONTROLLER) {
+            return@IFileCreate false
+        }
+        if (fileType == FileType.CONTROLLER || fileType == FileType.MAPPER || fileType == FileType.SERVICE || fileType == FileType.SERVICE_IMPL || fileType == FileType.XML) {
             // 已经生成 mapper 文件判断存在，不想重新生成返回 false
             return@IFileCreate !File(filePath).exists()
         }
@@ -114,7 +114,7 @@ fun main() {
 
     // 配置模板
     val templateConfig = TemplateConfig()
-    templateConfig.entityKt= "/templates/entity.kt.vm"
+    templateConfig.entityKt = "/templates/entity.kt.vm"
     // 配置自定义输出模板
     //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
     // templateConfig.setEntity("templates/entity2.java");

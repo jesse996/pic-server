@@ -63,15 +63,13 @@ open class NewsServiceImpl(
     }
 
     override fun getNewsById(id: Long): NewsVo? {
-        //浏览量+1
-        viewCountService.increase(id, ViewCountEnum.NEWS.code)
 
         val news = this.getById(id) ?: return null
         val res = BeanUtil.toBean(news, NewsVo::class.java)
 
         res.category = categoryService.getById(res.categoryId)?.name
         res.tags = newsTagService.getNewsTags(res.id)
-        res.viewCount = viewCountService.getByNewsId(id).count
+        res.viewCount = viewCountService.getByNewsId(id)?.count
         return res
     }
 

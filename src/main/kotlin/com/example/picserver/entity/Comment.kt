@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author jesse
- * @since 2021-08-16
+ * @since 2021-08-17
  */
 @ApiModel(value="Comment对象", description="评论表")
 open class Comment : Serializable {
@@ -29,6 +29,10 @@ open class Comment : Serializable {
     var createTime: LocalDateTime? = null
     @TableField(fill = FieldFill.INSERT_UPDATE)
     var updateTime: LocalDateTime? = null
+    @ApiModelProperty(value = "0:news,1:pic")
+    var type: Int? = null
+    @ApiModelProperty(value = "评论对象id")
+    var objId: Long? = null
 
 
     override fun toString(): String {
@@ -39,6 +43,8 @@ open class Comment : Serializable {
         ", toCommentId=" + toCommentId +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
+        ", type=" + type +
+        ", objId=" + objId +
         "}"
     }
 }

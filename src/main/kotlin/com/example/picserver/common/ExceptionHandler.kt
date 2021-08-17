@@ -18,6 +18,7 @@ class ExceptionHandler {
 
     @ExceptionHandler
     fun handleUnknownError(e: RuntimeException): CommonResult<Nothing> {
+        e.printStackTrace()
         return CommonResult.fail(e.localizedMessage)
     }
 }

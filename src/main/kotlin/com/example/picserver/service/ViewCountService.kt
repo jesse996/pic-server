@@ -13,6 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 interface ViewCountService : IService<ViewCount> {
     fun increase(id: Long, type: Int)
-    fun getByPicId(id: Long): ViewCount
-    fun getByNewsId(id: Long): ViewCount
+    fun getByPicId(id: Long): ViewCount?
+    fun getByNewsId(id: Long): ViewCount?
 }

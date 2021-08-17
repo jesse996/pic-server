@@ -1,0 +1,7 @@
+ALTER TABLE comment
+    ADD COLUMN `type` TINYINT NOT NULL DEFAULT 0 COMMENT '0:news,1:pic';
+ALTER TABLE comment
+    ADD COLUMN `obj_id` BIGINT NOT NULL COMMENT '评论对象id';
+
+
+

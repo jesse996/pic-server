@@ -2,10 +2,12 @@ package com.example.picserver.controller
 
 import com.baomidou.mybatisplus.core.metadata.IPage
 import com.example.picserver.common.CommonResult
+import com.example.picserver.const.ViewCountEnum
 import com.example.picserver.entity.News
 import com.example.picserver.entity.vo.NewsVo
 import com.example.picserver.entity.vo.PageReq
 import com.example.picserver.service.NewsService
+import com.example.picserver.service.ViewCountService
 import io.swagger.annotations.ApiOperation
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.CacheEvict
@@ -17,7 +19,7 @@ import javax.websocket.server.PathParam
 @RestController
 @RequestMapping("news")
 @CacheConfig(cacheNames = ["news"])
-class NewsController(val newsService: NewsService) {
+class NewsController(val newsService: NewsService,val viewCountService: ViewCountService) {
     @ApiOperation("分页查询")
     @Cacheable
     @PostMapping("list")
@@ -27,7 +29,11 @@ class NewsController(val newsService: NewsService) {
 
     @Cacheable(key = "#id")
     @GetMapping("/{id}")
-    fun getById(@PathVariable("id") id: Long) = CommonResult.success(newsService.getNewsById(id))
+    fun getById(@PathVariable("id") id: Long):CommonResult<NewsVo?> {
+        //浏览量+1
+        viewCountService.increase(id, ViewCountEnum.NEWS.code)
+        return CommonResult.success(newsService.getNewsById(id))
+    }
 
     @PostMapping("")
     fun add(@RequestBody news: NewsVo) = CommonResult.success(newsService.saveNews(news))

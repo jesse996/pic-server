@@ -2,6 +2,7 @@ package com.example.picserver.service;
 
 import com.example.picserver.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.picserver.entity.vo.CommentReq
 
 /**
  * <p>
@@ -11,4 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jesse
  * @since 2021-08-16
  */
-interface CommentService : IService<Comment>
+interface CommentService : IService<Comment> {
+    fun addComment(comment: CommentReq): Boolean
+}

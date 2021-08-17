@@ -73,7 +73,6 @@ open class UserServiceImpl(
     override fun current(): User? {
         val authentication = SecurityContextHolder.getContext().authentication
         if (authentication !is AnonymousAuthenticationToken) {
-            println(authentication.principal)
             val myUserDetails = authentication.principal as MyUserDetails
             myUserDetails.user.password = null
             return myUserDetails.user
