@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.picserver.mapper.CommentMapper">
-
+    <select id="getComment" resultType="com.example.picserver.entity.vo.CommentResp">
+        select c.*, u.nickname userNickname
+        from comment c
+                 inner join user u on c.user_id = u.id
+        where c.type = #{type}
+          and c.obj_id = #{objId}
+    </select>
 </mapper>

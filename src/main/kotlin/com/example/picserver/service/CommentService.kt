@@ -3,6 +3,7 @@ package com.example.picserver.service;
 import com.example.picserver.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.picserver.entity.vo.CommentReq
+import com.example.picserver.entity.vo.CommentResp
 
 /**
  * <p>
@@ -14,4 +15,5 @@ import com.example.picserver.entity.vo.CommentReq
  */
 interface CommentService : IService<Comment> {
     fun addComment(comment: CommentReq): Boolean
+    fun getComment(objId: Long, type: Int): List<CommentResp>
 }

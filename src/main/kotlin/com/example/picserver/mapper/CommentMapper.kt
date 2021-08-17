@@ -2,6 +2,7 @@ package com.example.picserver.mapper;
 
 import com.example.picserver.entity.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.picserver.entity.vo.CommentResp
 
 /**
  * <p>
@@ -11,4 +12,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author jesse
  * @since 2021-08-16
  */
-interface CommentMapper : BaseMapper<Comment>
+interface CommentMapper : BaseMapper<Comment> {
+    fun getComment(objId: Long, type: Int): List<CommentResp>
+}
