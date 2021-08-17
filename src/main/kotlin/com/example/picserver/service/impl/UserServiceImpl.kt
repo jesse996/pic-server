@@ -54,7 +54,7 @@ open class UserServiceImpl(
     override fun signUp(user: UserSignUpReq): Boolean {
         val sysUser = this.getByUsername(user.username)
         if (sysUser != null) {
-            return false
+            throw RuntimeException("用户名已被注册")
         }
         val tmp = User()
         tmp.username = user.username
@@ -62,7 +62,6 @@ open class UserServiceImpl(
 
         val encode = passwordEncoder.encode(user.password)
         tmp.password = encode
-        println(encode)
         return this.save(tmp)
     }
 
