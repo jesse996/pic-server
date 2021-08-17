@@ -10,11 +10,13 @@ import com.example.picserver.entity.News;
 import com.example.picserver.mapper.NewsMapper;
 import com.example.picserver.service.NewsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.picserver.const.ViewCountEnum
 import com.example.picserver.entity.Pic
 import com.example.picserver.entity.vo.NewsVo
 import com.example.picserver.entity.vo.PageReq
 import com.example.picserver.service.CategoryService
 import com.example.picserver.service.NewsTagService
+import com.example.picserver.service.ViewCountService
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,7 +28,11 @@ import org.springframework.stereotype.Service;
  * @since 2021-08-06
  */
 @Service
-open class NewsServiceImpl(val categoryService: CategoryService, val newsTagService: NewsTagService) :
+open class NewsServiceImpl(
+    val categoryService: CategoryService,
+    val newsTagService: NewsTagService,
+    val viewCountService: ViewCountService
+) :
     ServiceImpl<NewsMapper, News>(), NewsService {
     override fun search(keyword: String): List<News> =
         this.ktQuery()
@@ -57,11 +63,15 @@ open class NewsServiceImpl(val categoryService: CategoryService, val newsTagServ
     }
 
     override fun getNewsById(id: Long): NewsVo? {
+        //浏览量+1
+        viewCountService.increase(id, ViewCountEnum.NEWS.code)
+
         val news = this.getById(id) ?: return null
         val res = BeanUtil.toBean(news, NewsVo::class.java)
 
         res.category = categoryService.getById(res.categoryId)?.name
         res.tags = newsTagService.getNewsTags(res.id)
+        res.viewCount = viewCountService.getByNewsId(id).count
         return res
     }
 

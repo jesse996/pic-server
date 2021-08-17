@@ -4,6 +4,7 @@ import com.example.picserver.entity.ViewCount;
 import com.example.picserver.mapper.ViewCountMapper;
 import com.example.picserver.service.ViewCountService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.picserver.const.ViewCountEnum
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,8 +36,8 @@ open class ViewCountServiceImpl : ServiceImpl<ViewCountMapper, ViewCount>(), Vie
     }
 
     override fun getByPicId(id: Long): ViewCount =
-        this.ktQuery().eq(ViewCount::targetId, id).eq(ViewCount::type, 0).one()
+        this.ktQuery().eq(ViewCount::targetId, id).eq(ViewCount::type, ViewCountEnum.PIC.code).one()
 
     override fun getByNewsId(id: Long): ViewCount =
-        this.ktQuery().eq(ViewCount::targetId, id).eq(ViewCount::type, 1).one()
+        this.ktQuery().eq(ViewCount::targetId, id).eq(ViewCount::type, ViewCountEnum.NEWS.code).one()
 }

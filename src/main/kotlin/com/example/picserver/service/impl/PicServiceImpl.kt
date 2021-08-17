@@ -11,6 +11,7 @@ import com.example.picserver.entity.Pic
 import com.example.picserver.mapper.PicMapper
 import com.example.picserver.service.PicService
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
+import com.example.picserver.const.ViewCountEnum
 import com.example.picserver.entity.PicTag
 import com.example.picserver.entity.ViewCount
 import com.example.picserver.entity.vo.PageReq
@@ -54,7 +55,7 @@ class PicServiceImpl(
 
     override fun getPicRespById(id: Long): PicResp {
         //浏览量+1
-        viewCountService.increase(id, 0)
+        viewCountService.increase(id, ViewCountEnum.PIC.code)
 
         //返回数据
         val pic = this.getById(id)
