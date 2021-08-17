@@ -11,6 +11,7 @@ import com.example.picserver.security.MyUserDetails
 import com.example.picserver.service.UserService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service;
+import javax.annotation.Resource
 
 /**
  * <p>
@@ -21,8 +22,12 @@ import org.springframework.stereotype.Service;
  * @since 2021-08-16
  */
 @Service
-open class CommentServiceImpl(val userService: UserService, val commentMapper: CommentMapper) :
+open class CommentServiceImpl(val userService: UserService) :
     ServiceImpl<CommentMapper, Comment>(), CommentService {
+
+    @Resource
+    lateinit var commentMapper: CommentMapper
+
     override fun addComment(comment: CommentReq): Boolean {
         val user = userService.current()!!
         val cmt = Comment()
