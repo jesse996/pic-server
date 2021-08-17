@@ -20,12 +20,12 @@ class RestfulAccessDeniedHandler : AccessDeniedHandler {
     @Throws(IOException::class, ServletException::class)
     override fun handle(
         request: HttpServletRequest?,
-        response: HttpServletResponse?,
+        response: HttpServletResponse,
         accessDeniedException: AccessDeniedException?
     ) {
-        response?.characterEncoding = "UTF-8"
-        response?.contentType = "application/json"
-        response?.writer?.println(JSONUtil.parse(CommonResult.fail(accessDeniedException?.message!!)))
-        response?.writer?.flush()
+        response.characterEncoding = "UTF-8"
+        response.contentType = "application/json"
+        response.writer?.println(JSONUtil.parse(CommonResult.fail(accessDeniedException?.message!!)))
+        response.writer?.flush()
     }
 }

@@ -26,7 +26,7 @@ class JwtTokenUtil {
     /**
      * 根据负责生成JWT的token
      */
-    private fun generateToken(claims: Map<String, Any>?): String? {
+    private fun generateToken(claims: Map<String, Any>?): String {
         return Jwts.builder()
             .setClaims(claims)
             .setExpiration(generateExpirationDate())
@@ -81,6 +81,10 @@ class JwtTokenUtil {
         return username == userDetails.username && !isTokenExpired(token)
     }
 
+    fun validateToken(token: String):Boolean{
+        return !isTokenExpired(token)
+    }
+
     /**
      * 判断token是否已经失效
      */
@@ -100,7 +104,7 @@ class JwtTokenUtil {
     /**
      * 根据用户信息生成token
      */
-    fun generateToken(userDetails: UserDetails): String? {
+    fun generateToken(userDetails: UserDetails): String {
         val claims: MutableMap<String, Any> = HashMap()
         claims[CLAIM_KEY_USERNAME] = userDetails.username
         claims[CLAIM_KEY_CREATED] = Date()

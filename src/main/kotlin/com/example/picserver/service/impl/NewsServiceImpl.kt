@@ -56,9 +56,8 @@ open class NewsServiceImpl(val categoryService: CategoryService, val newsTagServ
         return true
     }
 
-    override fun getNewsById(id: Long): NewsVo {
-        val news = this.getById(id)
-        println(news)
+    override fun getNewsById(id: Long): NewsVo? {
+        val news = this.getById(id) ?: return null
         val res = BeanUtil.toBean(news, NewsVo::class.java)
 
         res.category = categoryService.getById(res.categoryId)?.name

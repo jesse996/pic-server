@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletResponse
  * Created by macro on 2018/4/26.
  */
 class JwtAuthenticationTokenFilter() : OncePerRequestFilter() {
+    @Resource
     lateinit var userDetailsService: UserDetailsService
+    @Resource
     lateinit var jwtTokenUtil: JwtTokenUtil
 
     @Value("\${jwt.tokenHeader}")
@@ -44,7 +46,7 @@ class JwtAuthenticationTokenFilter() : OncePerRequestFilter() {
             LOGGER.info("checking username:{}", username)
             if (username != null && SecurityContextHolder.getContext().authentication == null) {
                 val userDetails = userDetailsService.loadUserByUsername(username)
-                if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+                if (jwtTokenUtil.validateToken(authToken)) {
                     val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
                     authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
                     LOGGER.info("authenticated user:{}", username)

@@ -31,7 +31,6 @@ import javax.annotation.Resource
 class SecurityConfig(
     val restfulAccessDeniedHandler: RestfulAccessDeniedHandler,
     val restAuthenticationEntryPoint: RestAuthenticationEntryPoint,
-//    val userService: UserService
 ) : WebSecurityConfigurerAdapter() {
     @Resource
     lateinit var userService: UserService
@@ -49,18 +48,18 @@ class SecurityConfig(
                 "/",
                 "/*.html",
                 "/favicon.ico",
-                "/**/*.html",
+                "/**/*.html#*",
                 "/**/*.css",
                 "/**/*.js",
                 "/swagger-resources/**",
-                "/v2/api-docs/**"
+                "/v3/api-docs"
             )
             .permitAll()
-            .antMatchers("/admin/login", "/admin/register") // 对登录注册要允许匿名访问
+            .antMatchers("/user/signIn", "/user/signUp") // 对登录注册要允许匿名访问
             .permitAll()
             .antMatchers(HttpMethod.OPTIONS) //跨域请求会先进行一次options请求
-            .permitAll() //
-            .antMatchers("/**")//测试时全部运行访问
+//            .permitAll()
+//            .antMatchers("/**")//测试时全部运行访问
             .permitAll()
             .anyRequest() // 除上面外的所有请求全部需要鉴权认证
             .authenticated()
@@ -87,25 +86,15 @@ class SecurityConfig(
 
     @Bean
     public override fun userDetailsService(): UserDetailsService {
-        return object : UserDetailsService {
-            override fun loadUserByUsername(username: String?): UserDetails {
-                val user = userService.getByUsername(username!!)
-                if (user != null) {
-                    val permissionList = listOf("app")
-                    return MyUserDetails(user, permissionList)
-                }
-                throw UsernameNotFoundException("用户名或密码错误")
-            }
-        }
         //获取登录用户信息
-//        return UserDetailsService { username: String ->
-//            val user = userService.getByUsername(username)
-//            if (user != null) {
-//                val permissionList= listOf("app")
-//                return@UserDetailsService MyUserDetails(user, permissionList)
-//            }
-//            throw UsernameNotFoundException("用户名或密码错误")
-//        }
+        return UserDetailsService { username: String ->
+            val user = userService.getByUsername(username)
+            if (user != null) {
+                val permissionList = listOf("user")
+                return@UserDetailsService MyUserDetails(user, permissionList)
+            }
+            throw UsernameNotFoundException("用户名或密码错误")
+        }
     }
 
     @Bean

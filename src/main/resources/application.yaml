@@ -50,5 +50,5 @@ mybatis-plus:
 jwt:
   secret: jesse
   expiration: 3600
-  tokenHeader: Authentication
+  tokenHeader: Authorization
   tokenHead: Bearer

@@ -35,25 +35,20 @@ open class UserServiceImpl(
 ) : ServiceImpl<UserMapper, User>(), UserService {
     @Resource
     lateinit var userDetailsService: UserDetailsService
+
     @Resource
     lateinit var passwordEncoder: PasswordEncoder
 
-    private val logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
+//    private val logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 
     override fun signIn(user: UserSignInReq): String {
-        var token: String? = null
-        try {
-            val userDetails: UserDetails = userDetailsService.loadUserByUsername(user.username)
-            if (!passwordEncoder.matches(user.password, userDetails.password)) {
-                throw BadCredentialsException("密码不正确")
-            }
-            val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
-            SecurityContextHolder.getContext().authentication = authentication
-            token = jwtTokenUtil.generateToken(userDetails)
-        } catch (e: AuthenticationException) {
-            logger.warn("登录异常:{}", e.message)
+        val userDetails: UserDetails = userDetailsService.loadUserByUsername(user.username)
+        if (!passwordEncoder.matches(user.password, userDetails.password)) {
+            throw BadCredentialsException("密码不正确")
         }
-        return token?:""
+        val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
+        SecurityContextHolder.getContext().authentication = authentication
+        return jwtTokenUtil.generateToken(userDetails)
     }
 
     override fun signUp(user: UserSignUpReq): Boolean {

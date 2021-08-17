@@ -19,6 +19,6 @@ import com.example.picserver.entity.vo.PageReq
 interface NewsService : IService<News> {
     fun search(keyword: String): List<News>
     fun saveNews(news: NewsVo): Boolean
-    fun getNewsById(id: Long): NewsVo
+    fun getNewsById(id: Long): NewsVo?
     fun getPage(pageReq: PageReq<News>): IPage<NewsVo>
 }
