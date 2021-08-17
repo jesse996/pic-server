@@ -6,11 +6,11 @@ import com.example.picserver.entity.vo.UserSignInReq
 import com.example.picserver.entity.vo.UserSignUpReq
 import com.example.picserver.mapper.UserMapper
 import com.example.picserver.security.JwtTokenUtil
+import com.example.picserver.security.MyUserDetails
 import com.example.picserver.service.UserService
-import org.slf4j.LoggerFactory
+import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -69,4 +69,15 @@ open class UserServiceImpl(
         this.ktQuery()
             .eq(User::username, name)
             .one()
+
+    override fun current(): User? {
+        val authentication = SecurityContextHolder.getContext().authentication
+        if (authentication !is AnonymousAuthenticationToken) {
+            println(authentication.principal)
+            val myUserDetails = authentication.principal as MyUserDetails
+            myUserDetails.user.password = null
+            return myUserDetails.user
+        }
+        return null
+    }
 }

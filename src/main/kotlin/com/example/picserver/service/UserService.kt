@@ -17,4 +17,5 @@ interface UserService : IService<User> {
     fun signIn(user: UserSignInReq): String
     fun signUp(user: UserSignUpReq): Boolean
     fun getByUsername(name:String):User?
+    fun current(): User?
 }

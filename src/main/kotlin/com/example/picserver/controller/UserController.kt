@@ -5,11 +5,8 @@ import com.example.picserver.common.CommonResult
 import com.example.picserver.entity.vo.UserSignInReq
 import com.example.picserver.entity.vo.UserSignUpReq
 import com.example.picserver.service.UserService
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.*
 
 /**
  * <p>
@@ -30,5 +27,9 @@ class UserController(val userService: UserService) {
     fun signIn(@RequestBody user: UserSignInReq) =
         CommonResult.success(userService.signIn(user))
 
+    @ApiOperation("获取当前登录用户信息")
+    @GetMapping("")
+    fun getCurrent() =
+        CommonResult.success(userService.current())
 }
 
