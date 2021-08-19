@@ -1,22 +1,14 @@
 package com.example.picserver.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil
+import cn.hutool.crypto.digest.BCrypt
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import com.example.picserver.entity.User
 import com.example.picserver.entity.vo.UserSignInReq
 import com.example.picserver.entity.vo.UserSignUpReq
 import com.example.picserver.mapper.UserMapper
-import com.example.picserver.security.JwtTokenUtil
-import com.example.picserver.security.MyUserDetails
 import com.example.picserver.service.UserService
-import org.springframework.security.authentication.AnonymousAuthenticationToken
-import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import javax.annotation.Resource
 
 
 /**
@@ -28,27 +20,17 @@ import javax.annotation.Resource
  * @since 2021-08-16
  */
 @Service
-open class UserServiceImpl(
-//    val userDetailsService: UserDetailsService,
-//    val passwordEncoder: PasswordEncoder,
-    val jwtTokenUtil: JwtTokenUtil
-) : ServiceImpl<UserMapper, User>(), UserService {
-    @Resource
-    lateinit var userDetailsService: UserDetailsService
-
-    @Resource
-    lateinit var passwordEncoder: PasswordEncoder
-
+open class UserServiceImpl : ServiceImpl<UserMapper, User>(), UserService {
 //    private val logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 
     override fun signIn(user: UserSignInReq): String {
-        val userDetails: UserDetails = userDetailsService.loadUserByUsername(user.username)
-        if (!passwordEncoder.matches(user.password, userDetails.password)) {
-            throw BadCredentialsException("密码不正确")
+        val reply = this.getByUsername(user.username) ?: throw RuntimeException("用户不存在")
+        if (!BCrypt.checkpw(user.password, reply.password)) {
+            throw RuntimeException("密码不正确")
         }
-        val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
-        SecurityContextHolder.getContext().authentication = authentication
-        return jwtTokenUtil.generateToken(userDetails)
+        StpUtil.login(reply.id)
+        val tokenInfo = StpUtil.getTokenInfo()
+        return tokenInfo.tokenValue
     }
 
     override fun signUp(user: UserSignUpReq): Boolean {
@@ -59,9 +41,9 @@ open class UserServiceImpl(
         val tmp = User()
         tmp.username = user.username
         tmp.nickname = user.nickname
-
-        val encode = passwordEncoder.encode(user.password)
+        val encode = BCrypt.hashpw(user.password)
         tmp.password = encode
+
         return this.save(tmp)
     }
 
@@ -71,12 +53,7 @@ open class UserServiceImpl(
             .one()
 
     override fun current(): User? {
-        val authentication = SecurityContextHolder.getContext().authentication
-        if (authentication !is AnonymousAuthenticationToken) {
-            val myUserDetails = authentication.principal as MyUserDetails
-            myUserDetails.user.password = null
-            return myUserDetails.user
-        }
-        return null
+        val userId = StpUtil.getLoginIdAsLong()
+        return this.getById(userId)
     }
 }

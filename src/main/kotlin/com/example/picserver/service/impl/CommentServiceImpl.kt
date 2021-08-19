@@ -7,9 +7,7 @@ import com.example.picserver.service.CommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.picserver.entity.vo.CommentReq
 import com.example.picserver.entity.vo.CommentResp
-import com.example.picserver.security.MyUserDetails
 import com.example.picserver.service.UserService
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource
 

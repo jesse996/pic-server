@@ -48,7 +48,7 @@ dependencies {
     implementation("com.github.xiaoymin:knife4j-spring-boot-starter:3.0.3")
 
     //hutool
-    implementation("cn.hutool:hutool-all:5.6.5")
+    implementation("cn.hutool:hutool-all:5.7.9")
     //flyway
     implementation("org.flywaydb:flyway-core")
 
@@ -61,9 +61,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     //security
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("io.jsonwebtoken:jjwt:0.9.1")
-    implementation("javax.xml.bind:jaxb-api:2.3.0")
+//    implementation("org.springframework.boot:spring-boot-starter-security")
+//    implementation("io.jsonwebtoken:jjwt:0.9.1")
+//    implementation("javax.xml.bind:jaxb-api:2.3.0")
+
+    //sa-token
+    implementation("cn.dev33:sa-token-spring-boot-starter:1.25.0")
 }
 
 tasks.withType<KotlinCompile> {
