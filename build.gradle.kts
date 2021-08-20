@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "com.example"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 configurations {
@@ -29,12 +29,6 @@ repositories {
 }
 
 dependencies {
-    ext {
-        set("lombokVersion", "1.18.8")
-        set("fluentMybatisVersion", "1.6.0")
-        set("springVersion", "5.3.7")
-    }
-
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -57,13 +51,9 @@ dependencies {
     implementation("com.baomidou:mybatis-plus-generator:3.4.1")
     implementation("org.apache.velocity:velocity-engine-core:2.3")
 
+    //redis
     implementation("org.apache.commons:commons-pool2")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
-
-    //security
-//    implementation("org.springframework.boot:spring-boot-starter-security")
-//    implementation("io.jsonwebtoken:jjwt:0.9.1")
-//    implementation("javax.xml.bind:jaxb-api:2.3.0")
 
     //sa-token
     implementation("cn.dev33:sa-token-spring-boot-starter:1.25.0")

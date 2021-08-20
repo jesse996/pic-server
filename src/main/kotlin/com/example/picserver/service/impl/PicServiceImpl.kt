@@ -62,6 +62,9 @@ class PicServiceImpl(
         val picResp = BeanUtil.toBean(pic, PicResp::class.java)
         picResp.tags = tagMapper.getByPicId(id)
 
+        //返回view count
+        picResp.viewCount = viewCountService.getByPicId(id)?.count ?: 0
+
         //mzitu里的图片要修改url
         if (picResp.src?.contains("mzitu.com") == true) {
             picResp.coverImg = transPicUrl(picResp.coverImg!!, picResp.title!!)

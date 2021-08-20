@@ -44,15 +44,6 @@ mybatis-plus:
       id-type: auto
   checkConfigLocation: true
 
-#server:
-#  port: 8000
-
-jwt:
-  secret: jesse
-  expiration: 36000
-  tokenHeader: Authorization
-  tokenHead: Bearer
-
 # Sa-Token配置
 sa-token:
   # token名称 (同时也是cookie名称)
@@ -81,6 +72,6 @@ sa-token:
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
-    password:
+    password: 123
     # 连接超时时间（毫秒）
     timeout: 100ms
