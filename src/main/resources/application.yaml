@@ -10,6 +10,11 @@ spring:
   cache:
     # 使用了Spring Cache后，能指定spring.cache.type就手动指定一下，虽然它会自动去适配已有Cache的依赖，但先后顺序会对Redis使用有影响（JCache -> EhCache -> Redis -> Guava）
     type: REDIS
+  mail:
+    host: smtp.163.com
+    username: jesse9515@163.com
+    password: RTMYNXJVQWJNWOBL
+
   redis:
     host: localhost
     port: 6379

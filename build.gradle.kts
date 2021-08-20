@@ -59,6 +59,10 @@ dependencies {
     implementation("cn.dev33:sa-token-spring-boot-starter:1.25.0")
     implementation("cn.dev33:sa-token-dao-redis-jackson:1.25.0")
     implementation("cn.dev33:sa-token-alone-redis:1.25.0")
+
+    //mail
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 }
 
 tasks.withType<KotlinCompile> {
