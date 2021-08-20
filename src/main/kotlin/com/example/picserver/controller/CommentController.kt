@@ -28,7 +28,6 @@ class CommentController(val commentService: CommentService) {
     @ApiOperation("获取评论")
     @GetMapping("")
     fun getComment(@RequestParam("objId") objId: Long, @RequestParam("type") type: Int):CommonResult<List<CommentResp>> {
-//        return CommonResult.success(list)
         return CommonResult.success(commentService.getComment(objId,type))
     }
 }

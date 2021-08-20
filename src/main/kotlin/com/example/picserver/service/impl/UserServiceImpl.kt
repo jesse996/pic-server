@@ -53,7 +53,13 @@ open class UserServiceImpl : ServiceImpl<UserMapper, User>(), UserService {
             .one()
 
     override fun current(): User? {
+        if (!StpUtil.isLogin()) return null
         val userId = StpUtil.getLoginIdAsLong()
         return this.getById(userId)
+    }
+
+    override fun logout(): Boolean {
+        StpUtil.logout()
+        return true
     }
 }

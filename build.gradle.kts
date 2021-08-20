@@ -67,6 +67,8 @@ dependencies {
 
     //sa-token
     implementation("cn.dev33:sa-token-spring-boot-starter:1.25.0")
+    implementation("cn.dev33:sa-token-dao-redis-jackson:1.25.0")
+    implementation("cn.dev33:sa-token-alone-redis:1.25.0")
 }
 
 tasks.withType<KotlinCompile> {

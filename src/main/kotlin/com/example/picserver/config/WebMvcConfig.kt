@@ -14,7 +14,7 @@ class WebMvcConfig : WebMvcConfigurer {
      * @see ResourceHandlerRegistry
      */
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("file:C:/Users/jesse/Desktop/pic/spider/image/")
+        registry.addResourceHandler("/static/**").addResourceLocations("file:C:\\Users\\95157\\Pictures\\Camera Roll/")
         super.addResourceHandlers(registry)
     }
 }

@@ -27,6 +27,10 @@ class UserController(val userService: UserService) {
     fun signIn(@RequestBody user: UserSignInReq) =
         CommonResult.success(userService.signIn(user))
 
+    @PostMapping("logout")
+    fun logout()=
+        CommonResult.success(userService.logout())
+
     @ApiOperation("获取当前登录用户信息")
     @GetMapping("")
     fun getCurrent() =

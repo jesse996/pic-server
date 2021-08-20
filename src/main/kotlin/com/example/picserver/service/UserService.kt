@@ -18,4 +18,5 @@ interface UserService : IService<User> {
     fun signUp(user: UserSignUpReq): Boolean
     fun getByUsername(name:String):User?
     fun current(): User?
+    fun logout(): Boolean
 }

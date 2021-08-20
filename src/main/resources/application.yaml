@@ -68,4 +68,19 @@ sa-token:
   # token风格
   token-style: uuid
   # 是否输出操作日志
-  is-log: false
+  is-log: true
+  is-print: false
+  is-read-cookie: false
+
+  # 配置Sa-Token单独使用的Redis连接
+  alone-redis:
+    # Redis数据库索引（默认为0）
+    database: 2
+    # Redis服务器地址
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password:
+    # 连接超时时间（毫秒）
+    timeout: 100ms
