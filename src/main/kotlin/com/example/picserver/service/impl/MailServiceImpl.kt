@@ -49,10 +49,10 @@ class MailServiceImpl(val javaMailSender: JavaMailSender,val templateEngine: Tem
         }
     }
 
-    override fun sendEnableMail(to: String, id: Long) {
+    override fun sendEnableMail(to: String, id: String) {
         //创建邮件正文
         val context = Context()
-        context.setVariable("id", "006")
+        context.setVariable("id", id)
         val emailContent: String = templateEngine.process("emailTemplate", context)
 
         this.sendHtmlMail(to,"欢迎注册，请激活",emailContent)

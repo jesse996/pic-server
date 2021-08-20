@@ -1,8 +1,12 @@
 package com.example.picserver.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil
+import cn.hutool.core.codec.Base64
+import cn.hutool.crypto.SecureUtil
 import cn.hutool.crypto.digest.BCrypt
+import cn.hutool.crypto.digest.DigestUtil
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
+import com.example.picserver.const.UserStatusEnum
 import com.example.picserver.entity.User
 import com.example.picserver.entity.vo.UserSignInReq
 import com.example.picserver.entity.vo.UserSignUpReq
@@ -50,7 +54,7 @@ open class UserServiceImpl(val mailService: MailService) : ServiceImpl<UserMappe
         this.save(tmp)
 
         //发送激活邮件
-//        mailService.sendEnableMail(tmp.username!!,tmp.id!!)
+        mailService.sendEnableMail(tmp.username!!,Base64.encode(tmp.id!!.toString()))
 
         return true
     }
@@ -69,5 +73,12 @@ open class UserServiceImpl(val mailService: MailService) : ServiceImpl<UserMappe
     override fun logout(): Boolean {
         StpUtil.logout()
         return true
+    }
+
+    override fun enable(encode: String): Boolean {
+        val id = Base64.decodeStr(encode).toLong()
+        val user: User = this.getById(id) ?: return false
+        user.status = UserStatusEnum.VALID.code
+        return this.updateById(user)
     }
 }

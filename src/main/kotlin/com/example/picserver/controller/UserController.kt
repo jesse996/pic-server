@@ -38,5 +38,10 @@ class UserController(val userService: UserService) {
     @GetMapping("")
     fun getCurrent() =
         CommonResult.success(userService.current())
+
+    @ApiOperation("用户激活")
+    @GetMapping("/enable/{encode}")
+    fun enable(@PathVariable("encode") encode:String)=
+        CommonResult.success(userService.enable(encode))
 }
 

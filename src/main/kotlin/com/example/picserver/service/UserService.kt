@@ -19,4 +19,5 @@ interface UserService : IService<User> {
     fun getByUsername(name:String):User?
     fun current(): User?
     fun logout(): Boolean
+    fun enable(encode:String): Boolean
 }
