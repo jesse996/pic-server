@@ -2,6 +2,7 @@ package com.example.picserver.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil
 import cn.hutool.core.codec.Base64
+import cn.hutool.core.lang.UUID
 import cn.hutool.crypto.SecureUtil
 import cn.hutool.crypto.digest.BCrypt
 import cn.hutool.crypto.digest.DigestUtil
@@ -13,8 +14,11 @@ import com.example.picserver.entity.vo.UserSignUpReq
 import com.example.picserver.mapper.UserMapper
 import com.example.picserver.service.MailService
 import com.example.picserver.service.UserService
+import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.client.RestTemplate
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -26,7 +30,8 @@ import org.springframework.transaction.annotation.Transactional
  * @since 2021-08-16
  */
 @Service
-open class UserServiceImpl(val mailService: MailService) : ServiceImpl<UserMapper, User>(), UserService {
+open class UserServiceImpl(val mailService: MailService, val redisTemplate: StringRedisTemplate) :
+    ServiceImpl<UserMapper, User>(), UserService {
 //    private val logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
 
     override fun signIn(user: UserSignInReq): String {
@@ -53,6 +58,11 @@ open class UserServiceImpl(val mailService: MailService) : ServiceImpl<UserMappe
         tmp.password = encode
         this.save(tmp)
 
+        val token = UUID.fastUUID().toString(true)
+        redisTemplate.opsForValue()
+            .set(token, tmp.id!!.toString())
+        redisTemplate.expire(token, 5, TimeUnit.MINUTES)
+
         //发送激活邮件
         mailService.sendEnableMail(tmp.username!!,Base64.encode(tmp.id!!.toString()))
 
@@ -76,8 +86,9 @@ open class UserServiceImpl(val mailService: MailService) : ServiceImpl<UserMappe
     }
 
     override fun enable(encode: String): Boolean {
-        val id = Base64.decodeStr(encode).toLong()
-        val user: User = this.getById(id) ?: return false
+        val id = redisTemplate.opsForValue()
+            .get(encode) ?: return false
+        val user: User = this.getById(id.toLong()) ?: return false
         user.status = UserStatusEnum.VALID.code
         return this.updateById(user)
     }
