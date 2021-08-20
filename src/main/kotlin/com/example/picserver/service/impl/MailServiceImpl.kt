@@ -6,10 +6,12 @@ import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
+import org.thymeleaf.TemplateEngine
+import org.thymeleaf.context.Context
 import javax.mail.MessagingException
 
 @Service
-class MailServiceImpl(val javaMailSender: JavaMailSender) : MailService {
+class MailServiceImpl(val javaMailSender: JavaMailSender,val templateEngine: TemplateEngine) : MailService {
     @Value("\${spring.mail.username}")
     lateinit var from: String
 
@@ -45,5 +47,14 @@ class MailServiceImpl(val javaMailSender: JavaMailSender) : MailService {
             println(e)
             false
         }
+    }
+
+    override fun sendEnableMail(to: String, id: Long) {
+        //创建邮件正文
+        val context = Context()
+        context.setVariable("id", "006")
+        val emailContent: String = templateEngine.process("emailTemplate", context)
+
+        this.sendHtmlMail(to,"欢迎注册，请激活",emailContent)
     }
 }

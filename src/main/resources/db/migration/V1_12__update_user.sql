@@ -1,0 +1,8 @@
+ALTER TABLE user
+    ADD COLUMN status TINYINT DEFAULT 0 COMMENT '0:未激活，1：已激活，正常，2：冻结';
+
+ALTER TABLE user
+    ADD COLUMN role TINYINT DEFAULT 0 COMMENT '0:user,1:admin';
+
+
+

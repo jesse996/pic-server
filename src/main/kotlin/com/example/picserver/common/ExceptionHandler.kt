@@ -1,6 +1,7 @@
 package com.example.picserver.common
 
 import cn.dev33.satoken.exception.NotLoginException
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -12,10 +13,19 @@ import javax.servlet.http.HttpServletResponse
 class ExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleBindException(e: MethodArgumentNotValidException): CommonResult<String> {
+        val br: BindingResult = e.bindingResult
+        val msgStr = StringBuilder()
+        val feList = br.fieldErrors
+        for (fe in feList) {
+            val message = fe.defaultMessage
+            val field = fe.field
+            msgStr.append(field).append(message).append("; ")
+        }
+
         val commonResult = CommonResult<String>()
         commonResult.code = 400
         commonResult.msg = "validate error"
-        commonResult.data = e.message
+        commonResult.data = msgStr.toString()
         return commonResult
     }
 
