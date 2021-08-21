@@ -1,6 +1,7 @@
 package com.example.picserver.controller
 
 import com.example.picserver.common.CommonResult
+import com.example.picserver.entity.vo.OrderReq
 import com.example.picserver.service.PayService
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PostMapping
@@ -22,6 +23,6 @@ class PayController(val payService: PayService) {
 
     @ApiOperation("获取订单")
     @PostMapping("getOrder")
-    fun createOrder() =
-        CommonResult.success(payService.createOrder(1,1,1))
+    fun createOrder(orderReq: OrderReq) =
+        CommonResult.success(payService.createOrder(orderReq.amount,orderReq.targetId,orderReq.type))
 }

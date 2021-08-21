@@ -3,6 +3,7 @@ package com.example.picserver.service.impl
 import cn.dev33.satoken.stp.StpUtil
 import com.alipay.easysdk.factory.Factory
 import com.example.picserver.entity.SysOrder
+import com.example.picserver.entity.vo.OrderResp
 import com.example.picserver.service.PayService
 import com.example.picserver.service.SysOrderService
 import org.springframework.stereotype.Service
@@ -29,7 +30,7 @@ class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
     /**
      * 生成订单
      */
-    override fun createOrder(amount: Long, targetId: Long, type: Int): Any {
+    override fun createOrder(amount: Long, targetId: Long, type: Int): OrderResp {
         val order = SysOrder()
         order.userId = StpUtil.getLoginIdAsLong()
         order.targetId = targetId
@@ -42,12 +43,12 @@ class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
             .eq(SysOrder::type, order.type)
             .one()
         if (one != null) {
-            return one
+            return OrderResp(one.id!!)
         }
 
         order.amount = amount
         sysOrderService.save(order)
 
-        return order
+        return OrderResp(order.id!!)
     }
 }
