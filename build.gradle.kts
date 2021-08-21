@@ -66,6 +66,10 @@ dependencies {
 
     //validator
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    //alipay
+    implementation("com.alipay.sdk:alipay-easysdk:2.2.0")
+
 }
 
 tasks.withType<KotlinCompile> {
