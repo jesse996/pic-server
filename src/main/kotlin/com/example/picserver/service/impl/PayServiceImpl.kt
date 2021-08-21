@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil
 import com.alipay.easysdk.factory.Factory
 import com.example.picserver.entity.SysOrder
 import com.example.picserver.entity.vo.OrderResp
+import com.example.picserver.entity.vo.PayReq
 import com.example.picserver.service.PayService
 import com.example.picserver.service.SysOrderService
 import org.springframework.stereotype.Service
@@ -13,18 +14,31 @@ class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
     /**
      * 手机支付
      */
-    override fun payWap(money: Long): String? {
+    override fun payWap(payReq: PayReq): String? {
+        val order = sysOrderService.getById(payReq.orderId)!!
+
         return Factory.Payment.Wap()
-            .pay("subject", "1", "0.01", "https://m.jesse233.top", "https://m.jesse233.top").body
+            .pay(
+                "赞赏",
+                order.id!!.toString(),
+                (order.amount!! / 100).toString(),
+                payReq.redirect,
+                payReq.redirect
+            ).body
 
     }
 
     /**
      * pc支付
      */
-    override fun payPc(money: Long): String? {
-        val result = Factory.Payment.Page().pay("subject", "1", "0.01", "https://m.jesse233.top")
-        return result.body
+    override fun payPc(payReq: PayReq): String? {
+        val order = sysOrderService.getById(payReq.orderId)!!
+        return Factory.Payment.Page().pay(
+            "赞赏",
+            order.id!!.toString(),
+            (order.amount!! / 100).toString(),
+            payReq.redirect,
+        ).body
     }
 
     /**

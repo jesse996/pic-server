@@ -1,17 +1,18 @@
 package com.example.picserver.service
 
 import com.example.picserver.entity.vo.OrderResp
+import com.example.picserver.entity.vo.PayReq
 
 interface PayService {
     /**
      * 手机支付
      */
-    fun payWap(money: Long): String?
+    fun payWap(payReq: PayReq): String?
 
     /**
      * pc支付
      */
-    fun payPc(money: Long): String?
+    fun payPc(payReq: PayReq): String?
 
     /**
      * 生成订单

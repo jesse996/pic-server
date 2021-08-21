@@ -2,6 +2,7 @@ package com.example.picserver.controller
 
 import com.example.picserver.common.CommonResult
 import com.example.picserver.entity.vo.OrderReq
+import com.example.picserver.entity.vo.PayReq
 import com.example.picserver.service.PayService
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PostMapping
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController
 class PayController(val payService: PayService) {
     @ApiOperation("pc支付")
     @PostMapping("pc")
-    fun payPc() =
-        CommonResult.success(payService.payPc(1))
+    fun payPc(payReq: PayReq) =
+        CommonResult.success(payService.payPc(payReq))
 
     @ApiOperation("手机支付")
     @PostMapping("wap")
-    fun payWap() =
-        CommonResult.success(payService.payWap(1))
+    fun payWap(payReq: PayReq) =
+        CommonResult.success(payService.payWap(payReq))
 
     @ApiOperation("获取订单")
     @PostMapping("getOrder")

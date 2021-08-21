@@ -23,7 +23,7 @@ open class SysOrder : Serializable {
     var id: Long? = null
     @ApiModelProperty(value = "用户id")
     var userId: Long? = null
-    @ApiModelProperty(value = "金额，精确到后面2位")
+    @ApiModelProperty(value = "金额，单位分")
     var amount: Long? = null
     @ApiModelProperty(value = "订单目标id")
     var targetId: Long? = null
