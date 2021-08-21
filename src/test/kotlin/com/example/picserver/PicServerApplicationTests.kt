@@ -26,4 +26,5 @@ class PicServerApplicationTests {
         val emailContent: String = templateEngine.process("emailTemplate", context)
         mailService.sendMail("951576941@qq.com", "test", emailContent)
     }
+
 }

@@ -107,7 +107,7 @@ class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
                     logger.info { "支付宝回调成功: $trade_no, $out_trade_no, $amount,$passback_params" }
 
                     //付款成功后业务逻辑
-                    this.handlePaySuccess(trade_no!!.toLong(), (amount!!.toDouble() * 100).toLong())
+                    this.handlePaySuccess(out_trade_no!!.toLong(), (amount!!.toDouble() * 100).toLong())
 
                     return "success"
                 }

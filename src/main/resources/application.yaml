@@ -66,7 +66,8 @@ sa-token:
   # 是否输出操作日志
   is-log: true
   is-print: false
-  is-read-cookie: false
+#  is-read-cookie: false
+  token-session-check-login: false
 
   # 配置Sa-Token单独使用的Redis连接
   alone-redis:

@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableFill
 import com.baomidou.mybatisplus.generator.config.po.TableInfo
 import com.baomidou.mybatisplus.generator.config.rules.FileType
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy
+import org.bouncycastle.asn1.x500.style.RFC4519Style.l
 import java.io.File
 import java.util.*
 
@@ -40,7 +41,7 @@ fun scanner(tip: String): String {
     throw MybatisPlusException("请输入正确的$tip！")
 }
 
-fun main() {
+fun main1() {
     // 代码生成器
     val mpg = AutoGenerator()
 

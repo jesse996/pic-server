@@ -14,6 +14,7 @@ import com.example.picserver.entity.vo.UserSignUpReq
 import com.example.picserver.mapper.UserMapper
 import com.example.picserver.service.MailService
 import com.example.picserver.service.UserService
+import mu.KotlinLogging
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -32,7 +33,7 @@ import java.util.concurrent.TimeUnit
 @Service
 open class UserServiceImpl(val mailService: MailService, val redisTemplate: StringRedisTemplate) :
     ServiceImpl<UserMapper, User>(), UserService {
-//    private val logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
+    private val logger = KotlinLogging.logger{}
 
     override fun signIn(user: UserSignInReq): String {
         val reply = this.getByUsername(user.username) ?: throw RuntimeException("用户不存在")
