@@ -7,6 +7,7 @@ import com.example.picserver.entity.vo.OrderResp
 import com.example.picserver.entity.vo.PayReq
 import com.example.picserver.service.PayService
 import com.example.picserver.service.SysOrderService
+import org.apache.commons.lang3.compare.ComparableUtils.ge
 import org.springframework.stereotype.Service
 
 @Service
@@ -33,10 +34,11 @@ class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
      */
     override fun payPc(payReq: PayReq): String? {
         val order = sysOrderService.getById(payReq.orderId)!!
+
         return Factory.Payment.Page().pay(
             "赞赏",
             order.id!!.toString(),
-            (order.amount!! / 100).toString(),
+            (order.amount!! *1.0 / 100).toString(),
             payReq.redirect,
         ).body
     }
@@ -46,18 +48,20 @@ class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
      */
     override fun createOrder(amount: Long, targetId: Long, type: Int): OrderResp {
         val order = SysOrder()
-        order.userId = StpUtil.getLoginIdAsLong()
+        order.userId = StpUtil.getLoginIdDefaultNull() as Long?
         order.targetId = targetId
         order.type = type
 
-        //重复下单
-        val one = sysOrderService.ktQuery()
-            .eq(SysOrder::userId, order.userId)
-            .eq(SysOrder::targetId, targetId)
-            .eq(SysOrder::type, order.type)
-            .one()
-        if (one != null) {
-            return OrderResp(one.id!!)
+        if (order.userId != null) {
+            //重复下单
+            val one = sysOrderService.ktQuery()
+                .eq( SysOrder::userId, order.userId)
+                .eq(SysOrder::targetId, targetId)
+                .eq(SysOrder::type, order.type)
+                .one()
+            if (one != null) {
+                return OrderResp(one.id!!)
+            }
         }
 
         order.amount = amount
