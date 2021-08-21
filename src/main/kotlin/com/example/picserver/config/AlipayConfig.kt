@@ -43,7 +43,7 @@ class AlipayConfig {
         val config = Config()
         config.appId = appId
         config.merchantPrivateKey = merchantPrivateKey
-            ?: FileUtil.readUtf8String("C:\\Users\\jesse\\Documents\\支付宝开放平台开发助手\\RSA密钥\\应用私钥2048.txt")
+            ?: FileUtil.readUtf8String("C:\\Users\\jesse\\Documents\\支付宝密码\\正式\\应用私钥2048.txt")
         config.alipayPublicKey = alipayPublicKey;
         config.notifyUrl = notifyUrl
         config.signType = "RSA2"
