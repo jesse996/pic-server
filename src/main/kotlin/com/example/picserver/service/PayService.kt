@@ -10,4 +10,9 @@ interface PayService {
      * pc支付
      */
     fun payPc(money: Long): String?
+
+    /**
+     * 生成订单
+     */
+    fun createOrder(amount:Long,targetId:Long,type:Int): Any
 }

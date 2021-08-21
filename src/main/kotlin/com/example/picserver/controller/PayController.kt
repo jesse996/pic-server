@@ -19,4 +19,9 @@ class PayController(val payService: PayService) {
     @PostMapping("wap")
     fun payWap() =
         CommonResult.success(payService.payWap(1))
+
+    @ApiOperation("获取订单")
+    @PostMapping("getOrder")
+    fun createOrder() =
+        CommonResult.success(payService.createOrder(1,1,1))
 }

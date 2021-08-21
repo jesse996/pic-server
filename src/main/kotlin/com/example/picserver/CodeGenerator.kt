@@ -40,7 +40,7 @@ fun scanner(tip: String): String {
     throw MybatisPlusException("请输入正确的$tip！")
 }
 
-fun main1() {
+fun main() {
     // 代码生成器
     val mpg = AutoGenerator()
 
