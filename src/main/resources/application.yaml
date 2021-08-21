@@ -86,10 +86,10 @@ sa-token:
 alipay:
   appId: 2021002173666596
   #回调地址（必须外网可以调用，开发阶段建议使用内网穿透工具）
-#  notifyUrl:
+  notifyUrl: https://api.jesse233.top:1234/pay/notify
   #商户私钥
 #  merchantPrivateKey:
   alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkSvCHExIzwcAf5PUc2yjOshXu8UMtjsdcWnj2NI3JIgwtk/BttUU5xyx6b9Cpuhhj3GBrERr466//AJW3Tj0ZDhujdcRYD5WZ7LzK23OFMKc23WolGgpr8VaWMZRa4NOfDapRAHKUzn7DTr49lylVKoNUdsdT/99Ak1BKMNHeTlj2XxImuWewgoSjy8DdWShrXCikoy9+xiZCYDy5y69dbxBLzgS5zJpdPZ9WxWnYYuVhGE22Iw2FJYMjfOXP6K8rh0ydhNid9HUm7JT2ZDXPYZ4cQ86fncMxxRfPfciXQiwK7a5HtrzRTrkwkXqn5qYWlf0hJrz5fROOk9Qz6r5BwIDAQAB
   gatewayHost: openapi.alipay.com
   #AES密钥
-#  encryptKey:
+  encryptKey: ASiK8GwkA3s1W40ojQ3IvA==

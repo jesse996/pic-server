@@ -32,6 +32,9 @@ class AlipayConfig {
     @ApiModelProperty("网关")
     var gatewayHost: String? = null
 
+    @ApiModelProperty("接口加密")
+    var encryptKey: String? = null
+
     /**
      * 初始化工厂配置参数
      */
@@ -47,6 +50,7 @@ class AlipayConfig {
         config.ignoreSSL = true
         config.gatewayHost = gatewayHost
         config.protocol = "https"
+        config.encryptKey = encryptKey
 
         println(JSONUtil.toJsonPrettyStr(config))
         Factory.setOptions(config)

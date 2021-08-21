@@ -70,6 +70,10 @@ dependencies {
     //alipay
     implementation("com.alipay.sdk:alipay-easysdk:2.2.0")
 
+    //log
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.10")
+
+
 }
 
 tasks.withType<KotlinCompile> {

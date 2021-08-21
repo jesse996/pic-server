@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("pay")
@@ -26,5 +27,11 @@ class PayController(val payService: PayService) {
     @ApiOperation("获取订单")
     @PostMapping("getOrder")
     fun createOrder(@RequestBody orderReq: OrderReq) =
-        CommonResult.success(payService.createOrder(orderReq.amount,orderReq.targetId,orderReq.type))
+        CommonResult.success(payService.createOrder(orderReq.amount, orderReq.targetId, orderReq.type))
+
+    @ApiOperation("异步通知")
+    @PostMapping("notify")
+    fun notify(request: HttpServletRequest): String {
+        return payService.aliNotify(request)
+    }
 }
