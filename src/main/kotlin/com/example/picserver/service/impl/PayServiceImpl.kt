@@ -53,7 +53,9 @@ class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
      */
     override fun createOrder(amount: Long, targetId: Long, type: Int): OrderResp {
         val order = SysOrder()
-        order.userId = StpUtil.getLoginIdDefaultNull() as Long?
+        if (StpUtil.isLogin()) {
+            order.userId = StpUtil.getLoginIdAsLong()
+        }
         order.targetId = targetId
         order.type = type
 
