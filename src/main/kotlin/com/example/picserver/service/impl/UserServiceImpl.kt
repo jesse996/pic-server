@@ -39,9 +39,9 @@ open class UserServiceImpl(val mailService: MailService, val redisTemplate: Stri
     private val logger = KotlinLogging.logger {}
 
     override fun signIn(user: UserSignInReq): String {
-        val reply = this.getByUsername(user.username) ?: throw RuntimeException("用户不存在")
+        val reply = this.getByUsername(user.username) ?: throw RuntimeException("用户名密码错误")
         if (!BCrypt.checkpw(user.password, reply.password)) {
-            throw RuntimeException("密码不正确")
+            throw RuntimeException("用户名密码错误")
         }
         StpUtil.login(reply.id)
         val tokenInfo = StpUtil.getTokenInfo()
