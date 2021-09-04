@@ -20,4 +20,9 @@ interface UserService : IService<User> {
     fun current(): User?
     fun logout(): Boolean
     fun enable(encode:String): Boolean
+
+    /**
+     * 注册发送验证码
+     */
+    fun sendSignUpCode(email: String): Boolean
 }

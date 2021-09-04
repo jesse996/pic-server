@@ -3,10 +3,12 @@ package com.example.picserver.service.impl;
 import cn.dev33.satoken.stp.StpUtil
 import cn.hutool.core.codec.Base64
 import cn.hutool.core.lang.UUID
+import cn.hutool.core.util.RandomUtil
 import cn.hutool.crypto.SecureUtil
 import cn.hutool.crypto.digest.BCrypt
 import cn.hutool.crypto.digest.DigestUtil
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
+import com.example.picserver.common.BizError
 import com.example.picserver.const.UserStatusEnum
 import com.example.picserver.entity.User
 import com.example.picserver.entity.vo.UserSignInReq
@@ -19,6 +21,7 @@ import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.client.RestTemplate
+import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 
@@ -33,7 +36,7 @@ import java.util.concurrent.TimeUnit
 @Service
 open class UserServiceImpl(val mailService: MailService, val redisTemplate: StringRedisTemplate) :
     ServiceImpl<UserMapper, User>(), UserService {
-    private val logger = KotlinLogging.logger{}
+    private val logger = KotlinLogging.logger {}
 
     override fun signIn(user: UserSignInReq): String {
         val reply = this.getByUsername(user.username) ?: throw RuntimeException("用户不存在")
@@ -49,7 +52,13 @@ open class UserServiceImpl(val mailService: MailService, val redisTemplate: Stri
     override fun signUp(user: UserSignUpReq): Boolean {
         val sysUser = this.getByUsername(user.username)
         if (sysUser != null) {
-            throw RuntimeException("用户名已被注册")
+            throw BizError("用户名已被注册")
+        }
+
+        //验证
+        val codeInRedis = redisTemplate.opsForValue().get(user.username) ?: throw BizError("验证码错误")
+        if (codeInRedis != user.code) {
+            throw BizError("验证码错误")
         }
 
         val tmp = User()
@@ -57,15 +66,17 @@ open class UserServiceImpl(val mailService: MailService, val redisTemplate: Stri
         tmp.nickname = user.nickname
         val encode = BCrypt.hashpw(user.password)
         tmp.password = encode
+        tmp.status = 1
         this.save(tmp)
 
-        val token = UUID.fastUUID().toString(true)
-        redisTemplate.opsForValue()
-            .set(token, tmp.id!!.toString())
-        redisTemplate.expire(token, 5, TimeUnit.MINUTES)
-
         //发送激活邮件
-        mailService.sendEnableMail(tmp.username!!,Base64.encode(tmp.id!!.toString()))
+//        val token = UUID.fastUUID().toString(true)
+//        redisTemplate.opsForValue()
+//            .set(token, tmp.id!!.toString())
+//        redisTemplate.expire(token, 5, TimeUnit.MINUTES)
+//
+//
+//        mailService.sendEnableMail(tmp.username!!, Base64.encode(tmp.id!!.toString()))
 
         return true
     }
@@ -92,5 +103,24 @@ open class UserServiceImpl(val mailService: MailService, val redisTemplate: Stri
         val user: User = this.getById(id.toLong()) ?: return false
         user.status = UserStatusEnum.VALID.code
         return this.updateById(user)
+    }
+
+    /**
+     * 注册发送验证码
+     */
+    override fun sendSignUpCode(email: String): Boolean {
+        if (this.getByUsername(email) != null) {
+            throw BizError("邮箱已注册！")
+        }
+
+        val code = RandomUtil.randomInts(4).joinToString(separator = "")
+        val content = """
+            欢迎注册，您的验证码是：$code 
+            （15分钟内有效期。）
+        """.trimIndent()
+        redisTemplate.opsForValue().set(email, code)
+        redisTemplate.expire(email, Duration.ofMinutes(15))
+        mailService.sendMail(email, "欢迎注册妹子图", content)
+        return true
     }
 }

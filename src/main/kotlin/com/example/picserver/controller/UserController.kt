@@ -2,6 +2,7 @@ package com.example.picserver.controller;
 
 
 import com.example.picserver.common.CommonResult
+import com.example.picserver.entity.vo.SendCodeReq
 import com.example.picserver.entity.vo.UserSignInReq
 import com.example.picserver.entity.vo.UserSignUpReq
 import com.example.picserver.service.UserService
@@ -31,7 +32,7 @@ class UserController(val userService: UserService) {
         CommonResult.success(userService.signIn(user))
 
     @PostMapping("logout")
-    fun logout()=
+    fun logout() =
         CommonResult.success(userService.logout())
 
     @ApiOperation("获取当前登录用户信息")
@@ -41,7 +42,13 @@ class UserController(val userService: UserService) {
 
     @ApiOperation("用户激活")
     @GetMapping("/enable/{encode}")
-    fun enable(@PathVariable("encode") encode:String)=
+    fun enable(@PathVariable("encode") encode: String) =
         CommonResult.success(userService.enable(encode))
+
+    @ApiOperation("发送注册邮箱验证码")
+    @PostMapping("sendSignUpCode")
+    fun sendSignUpCode(@RequestBody sendCodeReq: SendCodeReq) =
+        CommonResult.success(userService.sendSignUpCode(sendCodeReq.email))
+
 }
 

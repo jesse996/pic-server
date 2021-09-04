@@ -53,6 +53,11 @@ class ExceptionHandler {
         return CommonResult.fail(message)
     }
 
+    @ExceptionHandler(BizError::class)
+    fun handleBizError(e: BizError): CommonResult<Nothing> {
+        return CommonResult.fail(e.localizedMessage ?: "")
+    }
+
     @ExceptionHandler
     fun handleUnknownError(e: RuntimeException): CommonResult<Nothing> {
         e.printStackTrace()
