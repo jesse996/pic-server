@@ -18,7 +18,7 @@ interface PayService {
     /**
      * 生成订单
      */
-    fun createOrder(amount:Long,targetId:Long,type:Int): OrderResp
+    fun createOrder(amount: Long, targetId: Long, type: Int, extra: String): OrderResp
 
     /**
      * 阿里异步通知

@@ -27,7 +27,7 @@ class PayController(val payService: PayService) {
     @ApiOperation("获取订单")
     @PostMapping("getOrder")
     fun createOrder(@RequestBody orderReq: OrderReq) =
-        CommonResult.success(payService.createOrder(orderReq.amount, orderReq.targetId, orderReq.type))
+        CommonResult.success(payService.createOrder(orderReq.amount, orderReq.targetId, orderReq.type,orderReq.extra))
 
     @ApiOperation("异步通知")
     @PostMapping("notify")

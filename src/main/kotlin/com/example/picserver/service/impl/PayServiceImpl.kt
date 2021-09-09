@@ -3,20 +3,26 @@ package com.example.picserver.service.impl
 import cn.dev33.satoken.stp.StpUtil
 import cn.hutool.json.JSONUtil
 import com.alipay.easysdk.factory.Factory
+import com.example.picserver.common.BizError
 import com.example.picserver.const.PayStatusEnum
 import com.example.picserver.entity.SysOrder
 import com.example.picserver.entity.vo.OrderResp
 import com.example.picserver.entity.vo.PayReq
 import com.example.picserver.service.PayService
 import com.example.picserver.service.SysOrderService
+import com.example.picserver.service.UserService
 import mu.KotlinLogging.logger
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import javax.servlet.http.HttpServletRequest
 
 private val logger = logger {}
 
 @Service
-class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
+class PayServiceImpl(
+    val sysOrderService: SysOrderService,
+    val userService: UserService
+) : PayService {
     /**
      * 手机支付
      */
@@ -51,25 +57,26 @@ class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
     /**
      * 生成订单
      */
-    override fun createOrder(amount: Long, targetId: Long, type: Int): OrderResp {
+    override fun createOrder(amount: Long, targetId: Long, type: Int, extra: String): OrderResp {
         val order = SysOrder()
         if (StpUtil.isLogin()) {
             order.userId = StpUtil.getLoginIdAsLong()
         }
         order.targetId = targetId
         order.type = type
+        order.extra = extra
 
-        if (order.userId != null) {
-            //重复下单
-            val one = sysOrderService.ktQuery()
-                .eq(SysOrder::userId, order.userId)
-                .eq(SysOrder::targetId, targetId)
-                .eq(SysOrder::type, order.type)
-                .one()
-            if (one != null) {
-                return OrderResp(one.id!!)
-            }
-        }
+//        if (order.userId != null) {
+//            //重复下单
+//            val one = sysOrderService.ktQuery()
+//                .eq(SysOrder::userId, order.userId)
+//                .eq(SysOrder::targetId, targetId)
+//                .eq(SysOrder::type, order.type)
+//                .one()
+//            if (one != null) {
+//                return OrderResp(one.id!!)
+//            }
+//        }
 
         order.amount = amount
         sysOrderService.save(order)
@@ -129,8 +136,23 @@ class PayServiceImpl(val sysOrderService: SysOrderService) : PayService {
      */
     override fun handlePaySuccess(orderId: Long, realAmount: Long) {
         val order = sysOrderService.getById(orderId)
-        if (order.amount != realAmount) throw RuntimeException("付款金额错误")
+        if (order.amount != realAmount) throw BizError("付款金额错误")
         order.status = PayStatusEnum.SUCCESS.code
         sysOrderService.updateById(order)
+
+        //如果是vip,给用户添加过期时间
+        if (order.type == 3) {
+            val user = userService.current()
+            if (user != null) {
+                var old = user.vipExpireTime
+                old = if (old != null && old.isAfter(LocalDateTime.now())) {
+                    old.plusMonths(order.extra?.toLong() ?: 0)
+                } else {
+                    LocalDateTime.now().plusMonths(order.extra?.toLong() ?: 0)
+                }
+                user.vipExpireTime = old
+                userService.updateById(user)
+            }
+        }
     }
 }

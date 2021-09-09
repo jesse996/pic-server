@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author jesse
- * @since 2021-08-20
+ * @since 2021-09-08
  */
 @ApiModel(value="User对象", description="用户表")
 open class User : Serializable {
@@ -35,6 +35,8 @@ open class User : Serializable {
     var status: Int? = null
     @ApiModelProperty(value = "0:user,1:admin")
     var role: Int? = null
+    @ApiModelProperty(value = "vip过期时间")
+    var vipExpireTime: LocalDateTime? = null
 
 
     override fun toString(): String {
@@ -47,6 +49,7 @@ open class User : Serializable {
         ", password=" + password +
         ", status=" + status +
         ", role=" + role +
+        ", vipExpireTime=" + vipExpireTime +
         "}"
     }
 }
