@@ -1,6 +1,7 @@
 package com.example.picserver.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil
+import cn.hutool.core.bean.BeanUtil
 import cn.hutool.core.codec.Base64
 import cn.hutool.core.lang.UUID
 import cn.hutool.core.util.RandomUtil
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import com.example.picserver.common.BizError
 import com.example.picserver.const.UserStatusEnum
 import com.example.picserver.entity.User
+import com.example.picserver.entity.vo.UserResp
 import com.example.picserver.entity.vo.UserSignInReq
 import com.example.picserver.entity.vo.UserSignUpReq
 import com.example.picserver.mapper.UserMapper
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.client.RestTemplate
 import java.time.Duration
+import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
 
@@ -41,7 +44,7 @@ open class UserServiceImpl(val mailService: MailService, val redisTemplate: Stri
     override fun signIn(user: UserSignInReq): String {
         val reply = this.getByUsername(user.username) ?: throw RuntimeException("用户名密码错误")
         if (!BCrypt.checkpw(user.password, reply.password)) {
-            throw RuntimeException("用户名密码错误")
+            throw BizError("用户名密码错误")
         }
         StpUtil.login(reply.id)
         val tokenInfo = StpUtil.getTokenInfo()
@@ -86,10 +89,13 @@ open class UserServiceImpl(val mailService: MailService, val redisTemplate: Stri
             .eq(User::username, name)
             .one()
 
-    override fun current(): User? {
+    override fun current(): UserResp? {
         if (!StpUtil.isLogin()) return null
         val userId = StpUtil.getLoginIdAsLong()
-        return this.getById(userId)
+        val user = this.getById(userId)
+        val userResp = BeanUtil.toBean(user, UserResp::class.java)
+        userResp.isVip = user.vipExpireTime?.isAfter(LocalDateTime.now())?:false
+        return userResp
     }
 
     override fun logout(): Boolean {

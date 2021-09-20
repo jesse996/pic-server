@@ -31,7 +31,7 @@ class PayServiceImpl(
 
         return Factory.Payment.Wap()
             .pay(
-                "赞赏",
+                "妹子图",
                 order.id!!.toString(),
                 (order.amount!! / 100).toString(),
                 payReq.redirect,
@@ -47,9 +47,9 @@ class PayServiceImpl(
         val order = sysOrderService.getById(payReq.orderId)!!
 
         return Factory.Payment.Page().pay(
-            "赞赏",
+            "妹子图",
             order.id!!.toString(),
-            (order.amount!! * 1.0 / 100).toString(),
+            (order.amount!! / 100).toString(),
             payReq.redirect,
         ).body
     }
