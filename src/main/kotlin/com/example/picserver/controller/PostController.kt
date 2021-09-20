@@ -8,6 +8,7 @@ import com.example.picserver.service.SysPostService
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("post")
+@RestController
 class PostController(
     private val sysPostService: SysPostService
 ) {

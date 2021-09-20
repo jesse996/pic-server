@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author jesse
- * @since 2021-09-20
+ * @since 2021-09-21
  */
 @ApiModel(value="SysPost对象", description="文章表")
 open class SysPost : Serializable {
@@ -29,6 +29,8 @@ open class SysPost : Serializable {
     var createTime: LocalDateTime? = null
     @TableField(fill = FieldFill.INSERT_UPDATE)
     var updateTime: LocalDateTime? = null
+    @ApiModelProperty(value = "内容")
+    var content: String? = null
 
 
     override fun toString(): String {
@@ -38,6 +40,7 @@ open class SysPost : Serializable {
         ", vodId=" + vodId +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
+        ", content=" + content +
         "}"
     }
 }
