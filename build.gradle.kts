@@ -42,7 +42,7 @@ dependencies {
     implementation("com.github.xiaoymin:knife4j-spring-boot-starter:3.0.3")
 
     //hutool
-    implementation("cn.hutool:hutool-all:5.7.9")
+    implementation("cn.hutool:hutool-all:5.7.13")
     //flyway
     implementation("org.flywaydb:flyway-core")
 

@@ -1,9 +1,15 @@
 package com.example.picserver.service.impl;
 
+import cn.hutool.http.HttpUtil
+import cn.hutool.json.JSONArray
+import cn.hutool.json.JSONObject
+import cn.hutool.json.JSONUtil
 import com.example.picserver.entity.SysVod;
 import com.example.picserver.mapper.SysVodMapper;
 import com.example.picserver.service.SysVodService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.picserver.entity.vo.VodClass
+import com.example.picserver.entity.vo.VodResp
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,5 +22,22 @@ import org.springframework.stereotype.Service;
  */
 @Service
 open class SysVodServiceImpl : ServiceImpl<SysVodMapper, SysVod>(), SysVodService {
+    override fun spiderAll() {
+        var res: String = HttpUtil.get("https://api.apibdzy.com/api.php/provide/vod/?ac=list")
+        val vodResp = tranVod(res)
+        for (i in 2..vodResp.pagecount!!) {
+            res = HttpUtil.get("https://api.apibdzy.com/api.php/provide/vod/?ac=list&pg=$i")
+            val tranVod = tranVod(res)
+            this.saveOrUpdateBatch(tranVod.list)
+        }
+
+    }
+
+    fun tranVod(res: String): VodResp {
+        val parse = JSONUtil.parseObj(res)
+        val vodResp: VodResp = JSONUtil.toBean(res, VodResp::class.java)
+        vodResp.classList = parse.getJSONArray("class").toList(VodClass::class.java)
+        return vodResp
+    }
 
 }

@@ -44,7 +44,7 @@ open class SysVodDetail : Serializable {
     var vodHitsDay: Int? = null
     var vodHitsMonth: Int? = null
     var vodHitsWeek: Int? = null
-    @TableId(value = "vod_id", type = IdType.AUTO)
+    @TableId(value = "vod_id", type = IdType.INPUT)
     var vodId: Int? = null
     var vodIsend: Int? = null
     var vodJumpurl: String? = null
