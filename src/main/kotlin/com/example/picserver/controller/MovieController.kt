@@ -1,6 +1,7 @@
 package com.example.picserver.controller
 
 import cn.hutool.http.HttpUtil
+import com.example.picserver.entity.SysVod
 import com.example.picserver.service.SysVodDetailService
 import com.example.picserver.service.SysVodService
 import io.swagger.annotations.ApiOperation
@@ -16,5 +17,10 @@ class MovieController(
     @ApiOperation("爬取全部")
     fun getNew() {
         sysVodService.spiderAll();
+    }
+
+    @ApiOperation("批量添加")
+    fun batchAdd(list:List<SysVod>){
+
     }
 }

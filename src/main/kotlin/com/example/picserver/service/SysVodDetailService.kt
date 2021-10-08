@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jesse
  * @since 2021-09-28
  */
-interface SysVodDetailService : IService<SysVodDetail>
+interface SysVodDetailService : IService<SysVodDetail>{
+    fun spiderDetail()
+}

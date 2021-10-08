@@ -1,6 +1,7 @@
 package com.example.picserver.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ open class SysVodDetail : Serializable {
 
     var groupId: Int? = null
     var typeId: Int? = null
+    @TableField(value = "type_id_1")
     var typeId1: Int? = null
     var typeName: String? = null
     var vodActor: String? = null

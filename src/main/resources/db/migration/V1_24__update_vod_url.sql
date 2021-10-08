@@ -1,0 +1,14 @@
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_actor TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_area TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_author TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_class TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_down_note TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_down_url TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_jumpurl TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_letter TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_pic TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_pic_screenshot TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_pic_slide TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_pic_thumb TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_plot_detail TEXT;
+ALTER TABLE sys_vod_detail MODIFY COLUMN vod_plot_name TEXT;

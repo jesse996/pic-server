@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil
 import com.example.picserver.entity.vo.VodClass
 import com.example.picserver.entity.vo.VodResp
 import com.example.picserver.service.MailService
+import com.example.picserver.service.SysVodDetailService
 import com.example.picserver.service.SysVodService
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -21,6 +22,8 @@ class PicServerApplicationTests {
     lateinit var templateEngine: TemplateEngine
     @Resource
     lateinit var sysVodService: SysVodService
+    @Resource
+    lateinit var sysVodDetailService: SysVodDetailService
 
     @Test
     fun contextLoads() {
@@ -38,6 +41,11 @@ class PicServerApplicationTests {
     @Test
     fun getVod(){
         sysVodService.spiderAll()
+    }
+
+    @Test
+    fun getVodDetail(){
+        sysVodDetailService.spiderDetail()
     }
 
 }
