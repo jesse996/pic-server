@@ -54,4 +54,29 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
         return JSONUtil.toBean(res, VodDetailResp::class.java)
     }
 
+    override fun spiderByHour(hour: Int) {
+        var res: String = HttpUtil.get("https://api.apibdzy.com/api.php/provide/vod/?ac=detail&h=$hour")
+        val vodResp = tranVodDetail(res)
+        this.saveOrUpdateBatch(vodResp.list)
+
+        var client = getHttpClient()
+
+        var i = 2
+        while (i <= vodResp.pagecount!!) {
+            try {
+                val request =
+                    Request.Builder().url("https://api.apibdzy.com/api.php/provide/vod/?ac=detail&pg=$i&h=$hour").build()
+                val response = client.newCall(request).execute()
+                res = response.body()!!.string()
+                println("i=$i")
+                val tranVod = tranVodDetail(res)
+                this.saveOrUpdateBatch(tranVod.list)
+            } catch (e: Exception) {
+                client = getHttpClient()
+                println(e.localizedMessage)
+                i -= 1
+            }
+            i += 1
+        }
+    }
 }

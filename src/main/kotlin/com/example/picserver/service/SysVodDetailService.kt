@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 interface SysVodDetailService : IService<SysVodDetail>{
     fun spiderDetail()
+    fun spiderByHour(i: Int)
 }

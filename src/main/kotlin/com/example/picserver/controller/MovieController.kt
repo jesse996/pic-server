@@ -13,14 +13,11 @@ class MovieController(
     val sysVodService: SysVodService,
     val sysVodDetailService: SysVodDetailService
 ) {
-    //    @Scheduled(cron = "0 1 * * * *")
-    @ApiOperation("爬取全部")
+    //没天的00：01 爬虫
+    @Scheduled(cron = "0 1 0 * * *")
+    @ApiOperation("爬取过去25小时")
     fun getNew() {
-        sysVodService.spiderAll();
-    }
-
-    @ApiOperation("批量添加")
-    fun batchAdd(list:List<SysVod>){
-
+        sysVodService.spiderByHour(25)
+        sysVodDetailService.spiderByHour(26)
     }
 }

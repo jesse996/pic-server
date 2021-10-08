@@ -59,5 +59,30 @@ open class SysVodServiceImpl : ServiceImpl<SysVodMapper, SysVod>(), SysVodServic
         return vodResp
     }
 
+    override fun spiderByHour(hours: Int) {
+        //爬vod
+        var res: String = HttpUtil.get("https://api.apibdzy.com/api.php/provide/vod/?ac=list&h=$hours")
+        val vodResp = tranVod(res)
+        this.saveOrUpdateBatch(vodResp.list)
 
+        var client = getHttpClient()
+
+        var i = 2
+        while (i <= vodResp.pagecount!!) {
+            try {
+                val request =
+                    Request.Builder().url("https://api.apibdzy.com/api.php/provide/vod/?ac=list&h=$hours&pg=$i").build()
+                val response = client.newCall(request).execute()
+                res = response.body()!!.string()
+                println("i=$i")
+                val tranVod = tranVod(res)
+                this.saveOrUpdateBatch(tranVod.list)
+            } catch (e: Exception) {
+                client = getHttpClient()
+                println(e.localizedMessage)
+                i -= 1
+            }
+            i += 1
+        }
+    }
 }
