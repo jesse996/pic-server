@@ -13,8 +13,8 @@ class MovieController(
     val sysVodService: SysVodService,
     val sysVodDetailService: SysVodDetailService
 ) {
-    //没天的00：01 爬虫
-    @Scheduled(cron = "0 1 0 * * *")
+    //每天的00：01 爬虫
+    @Scheduled(cron = "0 7 0 * * *")
     @ApiOperation("爬取过去25小时")
     fun getNew() {
         sysVodService.spiderByHour(25)

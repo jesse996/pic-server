@@ -52,7 +52,7 @@ class AlipayConfig {
         config.protocol = "https"
         config.encryptKey = encryptKey
 
-        println(JSONUtil.toJsonPrettyStr(config))
+//        println(JSONUtil.toJsonPrettyStr(config))
         Factory.setOptions(config)
     }
 }

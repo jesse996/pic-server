@@ -68,13 +68,14 @@ open class SysVodServiceImpl : ServiceImpl<SysVodMapper, SysVod>(), SysVodServic
         var client = getHttpClient()
 
         var i = 2
-        while (i <= vodResp.pagecount!!) {
+        val total = vodResp.pagecount!!
+        while (i <= total) {
             try {
                 val request =
                     Request.Builder().url("https://api.apibdzy.com/api.php/provide/vod/?ac=list&h=$hours&pg=$i").build()
                 val response = client.newCall(request).execute()
                 res = response.body()!!.string()
-                println("i=$i")
+                println("vod ------ $i/$total")
                 val tranVod = tranVod(res)
                 this.saveOrUpdateBatch(tranVod.list)
             } catch (e: Exception) {
