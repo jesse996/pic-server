@@ -1,9 +1,10 @@
 package com.example.picserver.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,14 +14,13 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author jesse
- * @since 2021-09-28
+ * @since 2021-10-18
  */
 @ApiModel(value="SysVodDetail对象", description="")
 open class SysVodDetail : Serializable {
 
     var groupId: Int? = null
     var typeId: Int? = null
-    @TableField(value = "type_id_1")
     var typeId1: Int? = null
     var typeName: String? = null
     var vodActor: String? = null
@@ -46,7 +46,7 @@ open class SysVodDetail : Serializable {
     var vodHitsDay: Int? = null
     var vodHitsMonth: Int? = null
     var vodHitsWeek: Int? = null
-    @TableId(value = "vod_id", type = IdType.INPUT)
+    @TableId(value = "vod_id", type = IdType.AUTO)
     var vodId: Int? = null
     var vodIsend: Int? = null
     var vodJumpurl: String? = null
@@ -103,6 +103,10 @@ open class SysVodDetail : Serializable {
     var vodWeekday: String? = null
     var vodWriter: String? = null
     var vodYear: String? = null
+    @TableField(fill = FieldFill.INSERT)
+    var createTime: LocalDateTime? = null
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    var updateTime: LocalDateTime? = null
 
 
     override fun toString(): String {
@@ -190,6 +194,8 @@ open class SysVodDetail : Serializable {
         ", vodWeekday=" + vodWeekday +
         ", vodWriter=" + vodWriter +
         ", vodYear=" + vodYear +
+        ", createTime=" + createTime +
+        ", updateTime=" + updateTime +
         "}"
     }
 }

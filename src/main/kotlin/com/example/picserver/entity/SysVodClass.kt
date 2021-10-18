@@ -16,18 +16,12 @@ import io.swagger.annotations.ApiModelProperty;
  * @author jesse
  * @since 2021-10-18
  */
-@ApiModel(value="SysVod对象", description="")
-open class SysVod : Serializable {
+@ApiModel(value="SysVodClass对象", description="")
+open class SysVodClass : Serializable {
 
+    @TableId(value = "type_id", type = IdType.AUTO)
     var typeId: Int? = null
     var typeName: String? = null
-    var vodEn: String? = null
-    @TableId(value = "vod_id", type = IdType.AUTO)
-    var vodId: Int? = null
-    var vodName: String? = null
-    var vodPlayFrom: String? = null
-    var vodRemarks: String? = null
-    var vodTime: LocalDateTime? = null
     @TableField(fill = FieldFill.INSERT)
     var createTime: LocalDateTime? = null
     @TableField(fill = FieldFill.INSERT_UPDATE)
@@ -35,15 +29,9 @@ open class SysVod : Serializable {
 
 
     override fun toString(): String {
-        return "SysVod{" +
+        return "SysVodClass{" +
         "typeId=" + typeId +
         ", typeName=" + typeName +
-        ", vodEn=" + vodEn +
-        ", vodId=" + vodId +
-        ", vodName=" + vodName +
-        ", vodPlayFrom=" + vodPlayFrom +
-        ", vodRemarks=" + vodRemarks +
-        ", vodTime=" + vodTime +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
         "}"
