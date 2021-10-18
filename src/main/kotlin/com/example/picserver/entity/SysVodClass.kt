@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value="SysVodClass对象", description="")
 open class SysVodClass : Serializable {
 
-    @TableId(value = "type_id", type = IdType.AUTO)
+    @TableId(value = "type_id", type = IdType.INPUT)
     var typeId: Int? = null
     var typeName: String? = null
     @TableField(fill = FieldFill.INSERT)

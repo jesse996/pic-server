@@ -22,7 +22,7 @@ open class SysVod : Serializable {
     var typeId: Int? = null
     var typeName: String? = null
     var vodEn: String? = null
-    @TableId(value = "vod_id", type = IdType.AUTO)
+    @TableId(value = "vod_id", type = IdType.INPUT)
     var vodId: Int? = null
     var vodName: String? = null
     var vodPlayFrom: String? = null
