@@ -12,3 +12,7 @@ alipay:
   gatewayHost: openapi.alipaydev.com
   #AES密钥
 #  encryptKey:
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
