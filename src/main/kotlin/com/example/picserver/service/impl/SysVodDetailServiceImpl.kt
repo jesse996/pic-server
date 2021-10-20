@@ -2,6 +2,7 @@ package com.example.picserver.service.impl;
 
 import cn.hutool.http.HttpUtil
 import cn.hutool.json.JSONUtil
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import com.example.picserver.entity.SysVodDetail;
 import com.example.picserver.mapper.SysVodDetailMapper;
 import com.example.picserver.service.SysVodDetailService;
@@ -11,6 +12,7 @@ import com.example.picserver.common.getHttpClient
 import com.example.picserver.entity.vo.VodDetailResp
 import okhttp3.Request
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime
 
 /**
  * <p>
@@ -91,6 +93,14 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
         ids: List<Long>?,
         limit: Long?
     ): VodCommonResult<List<SysVodDetail>> {
-        TODO("Not yet implemented")
+        val page = this.ktQuery()
+            .eq(t != null, SysVodDetail::typeId, t)
+            .`in`(ids != null, SysVodDetail::vodId, ids)
+            .like(wd != null, SysVodDetail::vodName, wd)
+            .gt(h != null, SysVodDetail::vodTime, LocalDateTime.now().minusHours(h?:0))
+            .page(Page(pg, limit ?: 20))
+
+        return VodCommonResult.success(page.records,"数据列表",page.current,page.pages,page.total,page.size)
+
     }
 }
