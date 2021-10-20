@@ -15,6 +15,7 @@ import com.example.picserver.common.VodCommonResult
 import com.example.picserver.common.getHttpClient
 import com.example.picserver.entity.vo.VodClass
 import com.example.picserver.entity.vo.VodResp
+import com.example.picserver.service.SysVodClassService
 import okhttp3.Request
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -28,7 +29,9 @@ import java.time.LocalDateTime
  * @since 2021-09-28
  */
 @Service
-open class SysVodServiceImpl : ServiceImpl<SysVodMapper, SysVod>(), SysVodService {
+open class SysVodServiceImpl(
+    val sysVodClassService: SysVodClassService
+) : ServiceImpl<SysVodMapper, SysVod>(), SysVodService {
     override fun spiderAll() {
         var res: String = HttpUtil.get("https://api.apibdzy.com/api.php/provide/vod/?ac=list")
         val vodResp = tranVod(res)
@@ -101,13 +104,16 @@ open class SysVodServiceImpl : ServiceImpl<SysVodMapper, SysVod>(), SysVodServic
             .gt(h != null, SysVod::vodTime, LocalDateTime.now().minusHours(h?:0))
             .page(Page(pg, limit ?: 20))
 
+        val vodClass = sysVodClassService.ktQuery().list()
+
         return VodCommonResult.success(
             res.records,
             page = res.current,
             pagecount = res.pages,
             total = res.total,
             msg = "ok",
-            limit = res.size
+            limit = res.size,
+            `class` = vodClass
         )
     }
 }

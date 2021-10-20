@@ -27,7 +27,7 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
     /**
      * 爬 vod detail
      */
-    override fun spiderDetail(){
+    override fun spiderDetail() {
         var res: String = HttpUtil.get("https://api.apibdzy.com/api.php/provide/vod/?ac=detail")
         val vodResp = tranVodDetail(res)
         this.saveOrUpdateBatch(vodResp.list)
@@ -70,7 +70,8 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
         while (i <= vodResp.pagecount!!) {
             try {
                 val request =
-                    Request.Builder().url("https://api.apibdzy.com/api.php/provide/vod/?ac=detail&pg=$i&h=$hour").build()
+                    Request.Builder().url("https://api.apibdzy.com/api.php/provide/vod/?ac=detail&pg=$i&h=$hour")
+                        .build()
                 val response = client.newCall(request).execute()
                 res = response.body()!!.string()
                 println("vod detail: i=$i")
@@ -97,10 +98,18 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
             .eq(t != null, SysVodDetail::typeId, t)
             .`in`(ids != null, SysVodDetail::vodId, ids)
             .like(wd != null, SysVodDetail::vodName, wd)
-            .gt(h != null, SysVodDetail::vodTime, LocalDateTime.now().minusHours(h?:0))
+            .gt(h != null, SysVodDetail::vodTime, LocalDateTime.now().minusHours(h ?: 0))
             .page(Page(pg, limit ?: 20))
 
-        return VodCommonResult.success(page.records,"数据列表",page.current,page.pages,page.total,page.size)
+        return VodCommonResult.success(
+            page.records,
+            msg = "数据列表",
+            `class` = null,
+            page.current,
+            page.pages,
+            page.total,
+            page.size
+        )
 
     }
 }
