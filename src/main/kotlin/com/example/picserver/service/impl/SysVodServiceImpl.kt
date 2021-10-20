@@ -1,11 +1,7 @@
 package com.example.picserver.service.impl;
 
 import cn.hutool.http.HttpUtil
-import cn.hutool.json.JSONArray
-import cn.hutool.json.JSONObject
 import cn.hutool.json.JSONUtil
-import com.aliyun.tea.okhttp.OkHttpClientBuilder
-import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import com.example.picserver.entity.SysVod;
 import com.example.picserver.mapper.SysVodMapper;
@@ -97,7 +93,7 @@ open class SysVodServiceImpl(
     /**
      * 查询list
      */
-    override fun get(t: Long?, pg: Long, wd: String?, h: Long?, limit: Long?): VodCommonResult<List<SysVod>> {
+    override fun get(t: Long?, pg: Long, wd: String?, h: Long?, limit: Long?): VodCommonResult<List<SysVod>?> {
         val res = this.ktQuery()
             .eq(t != null, SysVod::typeId, t)
             .like(wd != null, SysVod::vodName, wd)

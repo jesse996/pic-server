@@ -93,7 +93,7 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
         h: Long?,
         ids: List<Long>?,
         limit: Long?
-    ): VodCommonResult<List<SysVodDetail>> {
+    ): VodCommonResult<List<SysVodDetail>?> {
         val page = this.ktQuery()
             .eq(t != null, SysVodDetail::typeId, t)
             .`in`(ids != null, SysVodDetail::vodId, ids)

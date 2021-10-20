@@ -16,5 +16,5 @@ import com.example.picserver.common.VodCommonResult
 interface SysVodDetailService : IService<SysVodDetail>{
     fun spiderDetail()
     fun spiderByHour(hour: Int)
-    fun get (t: Long?, pg: Long, wd: String?, h: Long?, ids: List<Long>?,limit:Long?): VodCommonResult<List<SysVodDetail>>
+    fun get (t: Long?, pg: Long, wd: String?, h: Long?, ids: List<Long>?,limit:Long?): VodCommonResult<List<SysVodDetail>?>
 }

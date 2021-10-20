@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.databind.annotation.JsonNaming
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,6 +19,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2021-10-18
  */
 @ApiModel(value="SysVodDetail对象", description="")
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 open class SysVodDetail : Serializable {
 
     var groupId: Int? = null
