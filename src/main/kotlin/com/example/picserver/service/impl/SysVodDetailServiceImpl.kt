@@ -6,6 +6,7 @@ import com.example.picserver.entity.SysVodDetail;
 import com.example.picserver.mapper.SysVodDetailMapper;
 import com.example.picserver.service.SysVodDetailService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.picserver.common.VodCommonResult
 import com.example.picserver.common.getHttpClient
 import com.example.picserver.entity.vo.VodDetailResp
 import okhttp3.Request
@@ -70,7 +71,7 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
                     Request.Builder().url("https://api.apibdzy.com/api.php/provide/vod/?ac=detail&pg=$i&h=$hour").build()
                 val response = client.newCall(request).execute()
                 res = response.body()!!.string()
-                println("i=$i")
+                println("vod detail: i=$i")
                 val tranVod = tranVodDetail(res)
                 this.saveOrUpdateBatch(tranVod.list)
             } catch (e: Exception) {
@@ -80,5 +81,16 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
             }
             i += 1
         }
+    }
+
+    override fun get(
+        t: Long?,
+        pg: Long,
+        wd: String?,
+        h: Long?,
+        ids: List<Long>?,
+        limit: Long?
+    ): VodCommonResult<List<SysVodDetail>> {
+        TODO("Not yet implemented")
     }
 }

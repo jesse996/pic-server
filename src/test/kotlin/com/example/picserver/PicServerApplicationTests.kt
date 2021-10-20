@@ -73,6 +73,6 @@ class PicServerApplicationTests {
             println(res1)
             res1
         }.toList()
-        sysVodClassService.saveBatch(list1)
+        sysVodClassService.saveOrUpdateBatch(list1)
     }
 }

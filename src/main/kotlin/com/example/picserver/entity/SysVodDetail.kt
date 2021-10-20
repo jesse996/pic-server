@@ -21,6 +21,7 @@ open class SysVodDetail : Serializable {
 
     var groupId: Int? = null
     var typeId: Int? = null
+    @TableField(value = "type_id_1")
     var typeId1: Int? = null
     var typeName: String? = null
     var vodActor: String? = null

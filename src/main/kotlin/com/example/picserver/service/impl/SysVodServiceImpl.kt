@@ -5,15 +5,19 @@ import cn.hutool.json.JSONArray
 import cn.hutool.json.JSONObject
 import cn.hutool.json.JSONUtil
 import com.aliyun.tea.okhttp.OkHttpClientBuilder
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import com.example.picserver.entity.SysVod;
 import com.example.picserver.mapper.SysVodMapper;
 import com.example.picserver.service.SysVodService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.picserver.common.VodCommonResult
 import com.example.picserver.common.getHttpClient
 import com.example.picserver.entity.vo.VodClass
 import com.example.picserver.entity.vo.VodResp
 import okhttp3.Request
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 /**
  * <p>
@@ -85,5 +89,25 @@ open class SysVodServiceImpl : ServiceImpl<SysVodMapper, SysVod>(), SysVodServic
             }
             i += 1
         }
+    }
+
+    /**
+     * 查询list
+     */
+    override fun get(t: Long?, pg: Long, wd: String?, h: Long?, limit: Long?): VodCommonResult<List<SysVod>> {
+        val res = this.ktQuery()
+            .eq(t != null, SysVod::typeId, t)
+            .like(wd != null, SysVod::vodName, wd)
+            .gt(h != null, SysVod::vodTime, LocalDateTime.now().minusHours(h?:0))
+            .page(Page(pg, limit ?: 20))
+
+        return VodCommonResult.success(
+            res.records,
+            page = res.current,
+            pagecount = res.pages,
+            total = res.total,
+            msg = "ok",
+            limit = res.size
+        )
     }
 }
