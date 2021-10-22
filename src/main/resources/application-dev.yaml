@@ -1,5 +1,5 @@
 server:
-  port: 8000
+  port: 8001
 
 # 支付宝支付属性参数
 alipay:

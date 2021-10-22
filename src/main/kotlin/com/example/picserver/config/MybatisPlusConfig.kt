@@ -1,15 +1,17 @@
 package com.example.picserver.config
 
+import com.baomidou.mybatisplus.annotation.DbType
+import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer
+import com.baomidou.mybatisplus.core.MybatisConfiguration
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor
-import com.baomidou.mybatisplus.annotation.DbType
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler
 import org.apache.ibatis.reflection.MetaObject
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.time.LocalDateTime
 import java.util.*
-import java.util.function.Supplier
+
 
 @Configuration
 class MybatisPlusConfig {
