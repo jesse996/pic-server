@@ -39,7 +39,7 @@ open class SysLikeServiceImpl(val userService: UserService) : ServiceImpl<SysLik
         return false
     }
 
-    override fun getLikeCount(likeReq: LikeReq): Int =
+    override fun getLikeCount(likeReq: LikeReq): Long =
         this.ktQuery()
             .eq(SysLike::type, likeReq.type)
             .eq(SysLike::objId, likeReq.objId)

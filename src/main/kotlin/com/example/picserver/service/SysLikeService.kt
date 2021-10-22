@@ -14,5 +14,5 @@ import com.example.picserver.entity.vo.LikeReq
  */
 interface SysLikeService : IService<SysLike> {
     fun like(likeReq: LikeReq): Boolean
-    fun getLikeCount(likeReq: LikeReq): Int
+    fun getLikeCount(likeReq: LikeReq): Long
 }
