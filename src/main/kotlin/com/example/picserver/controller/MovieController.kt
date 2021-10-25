@@ -18,9 +18,9 @@ class MovieController(
     @Scheduled(cron = "0 7 0 * * *")
     @ApiOperation("爬取过去25小时")
     @PostMapping("/spider")
-    fun getNew(@RequestBody(required = false) hours: Int?): CommonResult<Boolean> {
-        sysVodService.spiderByHour(hours ?: 25)
-        sysVodDetailService.spiderByHour(hours ?: 26)
+    fun getNew(): CommonResult<Boolean> {
+        sysVodService.spiderByHour( 50)
+        sysVodDetailService.spiderByHour( 50)
         return CommonResult.success(true)
     }
 
