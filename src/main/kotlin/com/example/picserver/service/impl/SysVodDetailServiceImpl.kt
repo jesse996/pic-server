@@ -1,5 +1,6 @@
 package com.example.picserver.service.impl;
 
+import cn.hutool.core.collection.CollUtil
 import cn.hutool.http.HttpUtil
 import cn.hutool.json.JSONUtil
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
@@ -94,22 +95,27 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
         ids: List<Long>?,
         limit: Long?
     ): VodCommonResult<List<SysVodDetail>?> {
-        val page = this.ktQuery()
-            .eq(t != null, SysVodDetail::typeId, t)
-            .`in`(ids != null, SysVodDetail::vodId, ids)
-            .like(wd != null, SysVodDetail::vodName, wd)
-            .gt(h != null, SysVodDetail::vodTime, LocalDateTime.now().minusHours(h ?: 0))
-            .page(Page(pg, limit ?: 20))
+        try {
+            val page = this.ktQuery()
+                .eq(t != null, SysVodDetail::typeId, t)
+                .`in`(CollUtil.isNotEmpty(ids), SysVodDetail::vodId, ids)
+                .like(wd != null, SysVodDetail::vodName, wd)
+                .gt(h != null, SysVodDetail::vodTime, LocalDateTime.now().minusHours(h ?: 0))
+                .page(Page(pg, limit ?: 20))
 
-        return VodCommonResult.success(
-            page.records,
-            msg = "数据列表",
-            `class` = null,
-            page.current,
-            page.pages,
-            page.total,
-            page.size
-        )
-
+            return VodCommonResult.success(
+                page.records,
+                msg = "数据列表",
+                `class` = null,
+                page.current,
+                page.pages,
+                page.total,
+                page.size
+            )
+        } catch (e: Exception) {
+            println("vod detail")
+            println(e.localizedMessage)
+        }
+        return VodCommonResult.success(null,"空")
     }
 }
