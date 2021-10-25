@@ -6,7 +6,7 @@ import com.aliyun.tea.okhttp.OkHttpClientBuilder
 import okhttp3.OkHttpClient
 
 fun getHttpClient(): OkHttpClient {
-    val res = HttpUtil.get("http://api.fml233.cn:5010/get/")
+    val res = HttpUtil.get("http://ali.fml233.cn:5010/get/")
     val parseObj = JSONUtil.parseObj(res)
     val builder = OkHttpClientBuilder()
     val p = (if (parseObj["https"] as Boolean) "https://" else "http://") + parseObj["proxy"]
