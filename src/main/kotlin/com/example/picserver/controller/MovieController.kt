@@ -19,8 +19,9 @@ class MovieController(
     @ApiOperation("爬取过去25小时")
     @PostMapping("/spider")
     fun getNew(): CommonResult<Boolean> {
-        sysVodService.spiderByHour( 50)
-        sysVodDetailService.spiderByHour( 50)
+        sysVodService.spiderByHour( 25)
+        sysVodDetailService.spiderByHour( 25)
+        println("spider end")
         return CommonResult.success(true)
     }
 

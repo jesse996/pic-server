@@ -98,6 +98,7 @@ open class SysVodServiceImpl(
             .eq(t != null, SysVod::typeId, t)
             .like(wd != null, SysVod::vodName, wd)
             .gt(h != null, SysVod::vodTime, LocalDateTime.now().minusHours(h?:0))
+            .orderByDesc(SysVod::updateTime)
             .page(Page(pg, limit ?: 20))
 
         val vodClass = sysVodClassService.ktQuery().list()

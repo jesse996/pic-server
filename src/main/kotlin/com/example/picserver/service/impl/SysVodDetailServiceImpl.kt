@@ -10,6 +10,7 @@ import com.example.picserver.service.SysVodDetailService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.picserver.common.VodCommonResult
 import com.example.picserver.common.getHttpClient
+import com.example.picserver.entity.SysVod
 import com.example.picserver.entity.vo.VodDetailResp
 import okhttp3.Request
 import org.springframework.stereotype.Service;
@@ -101,6 +102,7 @@ open class SysVodDetailServiceImpl : ServiceImpl<SysVodDetailMapper, SysVodDetai
                 .`in`(CollUtil.isNotEmpty(ids), SysVodDetail::vodId, ids)
                 .like(wd != null, SysVodDetail::vodName, wd)
                 .gt(h != null, SysVodDetail::vodTime, LocalDateTime.now().minusHours(h ?: 0))
+                .orderByDesc(SysVodDetail::updateTime)
                 .page(Page(pg, limit ?: 20))
 
             return VodCommonResult.success(
