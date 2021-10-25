@@ -44,7 +44,7 @@ dependencies {
     //hutool
     implementation("cn.hutool:hutool-all:5.7.14")
     //flyway
-    implementation("org.flywaydb:flyway-core:8.0.0")
+    implementation("org.flywaydb:flyway-core:8.0.1")
 
     //mybatis plus
     implementation("com.baomidou:mybatis-plus-boot-starter:3.4.3.4")
